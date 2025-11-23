@@ -1,0 +1,5 @@
+{
+    "bracketSameLine": true, // avoid useless/empty final line for multiline html opening tags
+    "printWidth": 120, // raise line length to 120 characters (80 is too short for big screens)
+    "singleQuote": trueØ
+}
