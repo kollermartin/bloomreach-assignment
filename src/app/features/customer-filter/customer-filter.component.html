@@ -1,0 +1,12 @@
+<!--TODO Adjust defer later-->
+@defer (when filterEvents()) {
+  @let events = filterEvents()?.events;
+
+  @if (events) {
+    <h1>Filter events {{ events.length }}</h1>
+  } @else {
+    <h1>No customer events available</h1>
+  }
+} @placeholder {
+  Loading...
+}
