@@ -1,9 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
 import { FilterEventsService } from '../../core/services/filter-events.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { CustomerFilterContentComponent } from './components/customer-filter-content/customer-filter-content.component';
-import { CustomerFilterAttributeForm } from '../../core/models/customer-filter.form';
 
 @Component({
   selector: 'app-customer-filter',
@@ -14,52 +12,6 @@ import { CustomerFilterAttributeForm } from '../../core/models/customer-filter.f
 })
 export class CustomerFilterComponent {
   private filterEventsService = inject(FilterEventsService);
-  private formBuilder = inject(FormBuilder);
 
   filterEvents = toSignal(this.filterEventsService.getCustomerEvents());
-
-  customerFilterForm = this.formBuilder.group({
-    steps: this.formBuilder.array([
-      this.formBuilder.group({
-        event: this.formBuilder.nonNullable.control(''),
-        attributes: this.formBuilder.array<FormGroup<CustomerFilterAttributeForm>>([]),
-      }),
-    ]),
-  });
-
-  constructor() {
-    this.customerFilterForm.valueChanges.subscribe((value) => {
-      console.log('Form value changed', value);
-    });
-    this.steps.valueChanges.subscribe((value) => {
-      console.log('Steps changed:', value);
-    });
-  }
-
-  get steps() {
-    return this.customerFilterForm.controls.steps;
-  }
-
-  addStep() {
-    const step = this.formBuilder.group({
-      event: this.formBuilder.nonNullable.control(''),
-      attributes: this.formBuilder.array<FormGroup<CustomerFilterAttributeForm>>([]),
-    });
-
-    this.steps.push(step);
-  }
-
-  removeStep(index: number) {
-    this.steps.removeAt(index);
-  }
-
-  discardFilters() {
-    this.steps.clear({ emitEvent: false });
-    this.steps.push(
-      this.formBuilder.group({
-        event: this.formBuilder.nonNullable.control(''),
-        attributes: this.formBuilder.array<FormGroup<CustomerFilterAttributeForm>>([]),
-      }),
-    );
-  }
 }

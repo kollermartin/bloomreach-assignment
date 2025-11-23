@@ -1,20 +1,20 @@
 <div class="steps-header">
   <span>{{ heading | uppercase }}</span>
-  <app-button type="danger" (click)="discardFilters.emit()">Discard filters</app-button>
+  <app-button type="danger" (click)="discardFilters()">Discard filters</app-button>
 </div>
-<form [formGroup]="customerFilterForm()">
+<form [formGroup]="customerFilterForm">
   <div class="steps" formArrayName="steps">
     @for (step of steps.controls; track step; let i = $index) {
       <app-customer-filter-step
         [stepForm]="step"
         [index]="i"
         [customerEvents]="customerEvents()"
-        (removeStep)="removeStep.emit(i)"
+        (removeStep)="removeStep(i)"
       />
       <app-separator />
     }
     <div class="steps__actions">
-      <app-button [type]="'secondary'" (click)="addStep.emit()">{{
+      <app-button [type]="'secondary'" (click)="addStep()">{{
         addFunnelStepKey | uppercase
       }}</app-button>
     </div>
