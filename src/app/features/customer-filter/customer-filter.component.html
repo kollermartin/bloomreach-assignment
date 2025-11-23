@@ -3,7 +3,10 @@
   @let events = filterEvents()?.events;
 
   @if (events) {
-    <h1>Filter events {{ events.length }}</h1>
+    <div class="customer-filter">
+      <app-customer-filter-header />
+      <app-customer-filter-content [customerEvents]="events" />
+    </div>
   } @else {
     <h1>No customer events available</h1>
   }

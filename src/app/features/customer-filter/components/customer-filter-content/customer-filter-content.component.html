@@ -1,0 +1,8 @@
+<form [formGroup]="customerFilterForm">
+  <div class="steps" formArrayName="steps">
+    @for (step of steps.controls; track i; let i = $index) {
+      <app-customer-filter-step [stepForm]="step" [index]="i" />
+    }
+  </div>
+</form>
+<button>Apply filters</button>

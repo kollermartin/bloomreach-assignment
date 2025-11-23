@@ -1,0 +1,7 @@
+@let stepIndex = index() + 1;
+@let stepLabel = stepForm().controls.event.value || emptyStepLabel;
+
+<span>{{ stepIndex }}. {{ stepKey }}: {{ stepLabel }}</span>
+<div [formGroup]="stepForm()">
+  <input type="text" formControlName="event" />
+</div>

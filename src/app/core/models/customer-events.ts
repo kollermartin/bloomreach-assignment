@@ -1,5 +1,15 @@
-import { FilterEvent } from './filter-event';
-
 export interface CustomerEvents {
-  events: FilterEvent[];
+  events: CustomerEvent[];
 }
+
+export interface CustomerEvent {
+  type: string;
+  property: CustomerEventProperty;
+}
+
+export interface CustomerEventProperty {
+  property: string;
+  type: CustomerEventPropertyType;
+}
+
+export type CustomerEventPropertyType = 'string' | 'number';
