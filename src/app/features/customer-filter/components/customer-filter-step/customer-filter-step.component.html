@@ -6,7 +6,7 @@
   <span>{{ stepIndexToDisplay }}. {{ stepKey }}: {{ stepName }}</span>
   <div class="step-label__actions">
     @if (stepIndex) {
-      <button (click)="removeStep.emit()">delete</button>
+      <app-icon [type]="'delete'" (click)="removeStep.emit()" />
     }
   </div>
 </div>

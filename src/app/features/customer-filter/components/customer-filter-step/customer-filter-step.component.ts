@@ -12,10 +12,17 @@ import { CustomerFilterStepForm } from '../../../../core/models/customer-filter.
 import { CustomerEvent, CustomerEventProperty } from '../../../../core/models/customer-events';
 import { FilterSelectComponent } from '../../../../shared/filter-select/filter-select.component';
 import { ButtonComponent } from '../../../../shared/button/button.component';
+import {IconComponent} from '../../../../shared/icon/icon.component';
 
 @Component({
   selector: 'app-customer-filter-step',
-  imports: [ReactiveFormsModule, FilterSelectComponent, FilterSelectComponent, ButtonComponent],
+  imports: [
+    ReactiveFormsModule,
+    FilterSelectComponent,
+    FilterSelectComponent,
+    ButtonComponent,
+    IconComponent,
+  ],
   templateUrl: './customer-filter-step.component.html',
   styleUrl: './customer-filter-step.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
