@@ -1,8 +1,10 @@
-<form [formGroup]="customerFilterForm">
+<form [formGroup]="customerFilterForm()">
   <div class="steps" formArrayName="steps">
-    @for (step of steps.controls; track i; let i = $index) {
-      <app-customer-filter-step [stepForm]="step" [index]="i" />
+    @for (step of steps.controls; track step; let i = $index) {
+      <app-customer-filter-step [stepForm]="step" [index]="i" (removeStep)="removeStep.emit(i)" />
+      <app-separator />
     }
+    <button (click)="addStep.emit()">{{ addFunnelStepKey }}</button>
   </div>
 </form>
 <button>Apply filters</button>

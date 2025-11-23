@@ -1,38 +1,42 @@
-import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  effect,
+  inject,
+  input,
+  output,
+} from '@angular/core';
 import { CustomerEvent } from '../../../../core/models/customer-events';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CustomerFilterStepComponent } from '../customer-filter-step/customer-filter-step.component';
+import { SeparatorComponent } from '../../../../shared/separator/separator.component';
+import { CustomerFilterForm } from '../../../../core/models/customer-filter.form';
 
 @Component({
   selector: 'app-customer-filter-content',
-  imports: [ReactiveFormsModule, CustomerFilterStepComponent],
+  imports: [ReactiveFormsModule, CustomerFilterStepComponent, SeparatorComponent],
   templateUrl: './customer-filter-content.component.html',
   styleUrl: './customer-filter-content.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CustomerFilterContentComponent {
-  private formBuilder = inject(FormBuilder);
-
-  constructor() {
-    this.customerFilterForm.valueChanges.subscribe((value) => {
-      console.log('Form value changed', value);
-    });
-    this.steps.valueChanges.subscribe((value) => {
-      console.log('Steps changed:', value);
-    });
-  }
-
   customerEvents = input.required<CustomerEvent[]>();
+  customerFilterForm = input.required<FormGroup<CustomerFilterForm>>();
+  discardFiltersTrigger = input<number>();
+  cdr = inject(ChangeDetectorRef);
 
-  customerFilterForm = this.formBuilder.group({
-    steps: this.formBuilder.array([
-      this.formBuilder.group({
-        event: this.formBuilder.nonNullable.control(''),
-      }),
-    ]),
+  refreshComponentAfterDiscardAll = effect(() => {
+    this.discardFiltersTrigger();
+    this.cdr.markForCheck();
   });
 
+  addStep = output();
+  removeStep = output<number>();
+
+  readonly addFunnelStepKey = 'Add funnel step';
+
   get steps() {
-    return this.customerFilterForm.controls.steps;
+    return this.customerFilterForm().controls.steps;
   }
 }

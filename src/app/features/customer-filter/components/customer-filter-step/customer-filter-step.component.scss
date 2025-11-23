@@ -1,5 +1,21 @@
 :host {
   display: grid;
   gap: 1rem;
+
+  &:hover {
+    .step-label__actions {
+      opacity: 1;
+    }
+  }
 }
 
+.step-label {
+  display: flex;
+  justify-content: space-between;
+
+  &__actions {
+    display: flex;
+    gap: 8px;
+    opacity: 0;
+  }
+}
