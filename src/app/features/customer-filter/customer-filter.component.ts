@@ -3,7 +3,6 @@ import { FormBuilder } from '@angular/forms';
 import { FilterEventsService } from '../../core/services/filter-events.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { CustomerFilterContentComponent } from './components/customer-filter-content/customer-filter-content.component';
-import { CustomerFilterStepForm } from '../../core/models/customer-filter.form';
 
 @Component({
   selector: 'app-customer-filter',
@@ -24,6 +23,7 @@ export class CustomerFilterComponent {
     steps: this.formBuilder.array([
       this.formBuilder.group({
         event: this.formBuilder.nonNullable.control(''),
+        attribute: this.formBuilder.control<string | null>(null),
       }),
     ]),
   });
@@ -42,8 +42,9 @@ export class CustomerFilterComponent {
   }
 
   addStep() {
-    const step = this.formBuilder.group<CustomerFilterStepForm>({
+    const step = this.formBuilder.group({
       event: this.formBuilder.nonNullable.control(''),
+      attribute: this.formBuilder.control<string | null>(null),
     });
 
     this.steps.push(step);
@@ -55,8 +56,9 @@ export class CustomerFilterComponent {
 
   copyStep(index: number) {
     const stepValue = this.steps.controls[index].value;
-    const copiedStep = this.formBuilder.group<CustomerFilterStepForm>({
+    const copiedStep = this.formBuilder.group({
       event: this.formBuilder.nonNullable.control(stepValue.event || ''),
+      attribute: this.formBuilder.control(stepValue.attribute ?? null),
     });
     this.steps.insert(index + 1, copiedStep);
   }
@@ -64,8 +66,9 @@ export class CustomerFilterComponent {
   discardFilters() {
     this.steps.clear({ emitEvent: false });
     this.steps.push(
-      this.formBuilder.group<CustomerFilterStepForm>({
+      this.formBuilder.group({
         event: this.formBuilder.nonNullable.control(''),
+        attribute: this.formBuilder.control<string | null>(null),
       }),
     );
   }

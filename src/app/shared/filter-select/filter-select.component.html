@@ -1,6 +1,4 @@
-<select (change)="onSelectChange($event)" [disabled]="disabled">
-  <option value="">Select an event</option>
-  @for (option of options(); track option.type) {
-    <option [value]="option.type" [selected]="value() === option.type">{{ option.type }}</option>
-  }
+<select (change)="onSelectChange($event)">
+  <option value="">{{ label() }}</option>
+  <ng-content />
 </select>

@@ -12,7 +12,7 @@ import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CustomerFilterStepComponent } from '../customer-filter-step/customer-filter-step.component';
 import { SeparatorComponent } from '../../../../shared/separator/separator.component';
 import { CustomerFilterForm } from '../../../../core/models/customer-filter.form';
-import {UpperCasePipe} from '@angular/common';
+import { UpperCasePipe } from '@angular/common';
 
 @Component({
   selector: 'app-customer-filter-content',
@@ -35,7 +35,7 @@ export class CustomerFilterContentComponent {
   addStep = output();
   removeStep = output<number>();
   copyStep = output<number>();
-  discardFilters = output()
+  discardFilters = output();
 
   readonly addFunnelStepKey = 'Add funnel step';
   readonly heading = 'customer filter';

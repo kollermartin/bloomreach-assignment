@@ -6,4 +6,5 @@ export interface CustomerFilterForm {
 
 export interface CustomerFilterStepForm {
   event: FormControl<string>;
+  attribute: FormControl<string | null>;
 }

@@ -1,7 +1,15 @@
-import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  input,
+  output,
+  Signal,
+  signal,
+} from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CustomerFilterStepForm } from '../../../../core/models/customer-filter.form';
-import { CustomerEvent } from '../../../../core/models/customer-events';
+import { CustomerEvent, CustomerEventProperty } from '../../../../core/models/customer-events';
 import { FilterSelectComponent } from '../../../../shared/filter-select/filter-select.component';
 
 @Component({
@@ -21,4 +29,35 @@ export class CustomerFilterStepComponent {
 
   readonly stepKey = 'Step';
   readonly emptyStepLabel = 'Unnamed step';
+
+  selectedEvent = signal('');
+
+  eventControl = computed(() => {
+    return this.stepForm().controls.event;
+  });
+
+  attributeControl = computed(() => {
+    return this.stepForm().controls.attribute;
+  });
+
+  addEventAttribute = () => {
+    this.stepForm().controls.attribute.setValue('');
+  };
+
+  eventSelectChange = (event: string) => {
+    console.log('Event called and setting', event);
+    this.selectedEvent.set(event);
+  };
+
+  //TODO Look how to better refactor this
+  attributesList: Signal<CustomerEventProperty[]> = computed(() => {
+    const type = this.selectedEvent();
+    if (!type) return [];
+    return this.customerEvents()
+      .filter((ev) => ev.type === type)
+      .flatMap((ev) => {
+        const props = (ev as any).properties;
+        return Array.isArray(props) ? props : [props];
+      });
+  });
 }

@@ -4,7 +4,7 @@ export interface CustomerEvents {
 
 export interface CustomerEvent {
   type: string;
-  property: CustomerEventProperty;
+  properties: CustomerEventProperty;
 }
 
 export interface CustomerEventProperty {
