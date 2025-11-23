@@ -4,13 +4,7 @@
 
   @if (events) {
     <div class="customer-filter">
-      <app-customer-filter-content
-        [customerEvents]="events"
-        [customerFilterForm]="customerFilterForm"
-        (discardFilters)="discardFilters()"
-        (addStep)="addStep()"
-        (removeStep)="removeStep($event)"
-      />
+      <app-customer-filter-content [customerEvents]="events" />
     </div>
   } @else {
     <h1>No customer events available</h1>
