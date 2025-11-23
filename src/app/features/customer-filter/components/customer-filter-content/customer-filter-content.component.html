@@ -1,6 +1,6 @@
 <div class="steps-header">
   <span>{{ heading | uppercase }}</span>
-  <button (click)="discardFilters.emit()">Discard filters</button>
+  <app-button type="danger" (click)="discardFilters.emit()">Discard filters</app-button>
 </div>
 <form [formGroup]="customerFilterForm()">
   <div class="steps" formArrayName="steps">
@@ -14,7 +14,11 @@
       />
       <app-separator />
     }
-    <button (click)="addStep.emit()">{{ addFunnelStepKey }}</button>
+    <div class="steps__actions">
+      <app-button [type]="'secondary'" (click)="addStep.emit()">{{
+        addFunnelStepKey | uppercase
+      }}</app-button>
+    </div>
   </div>
 </form>
-<button>Apply filters</button>
+<app-button>Apply filters</app-button>

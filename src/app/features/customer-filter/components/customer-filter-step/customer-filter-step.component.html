@@ -24,7 +24,9 @@
   @let attributeControlValue = attributeControl().value;
 
   @if (selectedEvent() && attributeControlValue === null) {
-    <button (click)="addEventAttribute()">Add attribute</button>
+    <app-button type="secondary" (click)="addEventAttribute()">{{
+      addEventAttributeKey
+    }}</app-button>
   } @else if (selectedEvent() && attributeControlValue !== null) {
     @let attributes = attributesList();
 

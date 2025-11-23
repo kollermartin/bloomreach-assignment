@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { FilterEventsService } from '../../core/services/filter-events.service';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -14,8 +14,6 @@ import { CustomerFilterContentComponent } from './components/customer-filter-con
 export class CustomerFilterComponent {
   private filterEventsService = inject(FilterEventsService);
   private formBuilder = inject(FormBuilder);
-
-  discardSignal = signal(0);
 
   filterEvents = toSignal(this.filterEventsService.getCustomerEvents());
 

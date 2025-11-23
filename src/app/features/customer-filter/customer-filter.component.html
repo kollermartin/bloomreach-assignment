@@ -7,7 +7,6 @@
       <app-customer-filter-content
         [customerEvents]="events"
         [customerFilterForm]="customerFilterForm"
-        [discardFiltersTrigger]="discardSignal()"
         (discardFilters)="discardFilters()"
         (addStep)="addStep()"
         (removeStep)="removeStep($event)"

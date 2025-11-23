@@ -11,10 +11,11 @@ import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CustomerFilterStepForm } from '../../../../core/models/customer-filter.form';
 import { CustomerEvent, CustomerEventProperty } from '../../../../core/models/customer-events';
 import { FilterSelectComponent } from '../../../../shared/filter-select/filter-select.component';
+import { ButtonComponent } from '../../../../shared/button/button.component';
 
 @Component({
   selector: 'app-customer-filter-step',
-  imports: [ReactiveFormsModule, FilterSelectComponent, FilterSelectComponent],
+  imports: [ReactiveFormsModule, FilterSelectComponent, FilterSelectComponent, ButtonComponent],
   templateUrl: './customer-filter-step.component.html',
   styleUrl: './customer-filter-step.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -29,6 +30,7 @@ export class CustomerFilterStepComponent {
 
   readonly stepKey = 'Step';
   readonly emptyStepLabel = 'Unnamed step';
+  readonly addEventAttributeKey = '+ Add event attribute';
 
   selectedEvent = signal('');
 

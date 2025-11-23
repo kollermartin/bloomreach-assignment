@@ -1,0 +1,46 @@
+.button {
+  border: none;
+  display: inline-block;
+  font-size: 14px;
+  padding: 8px 16px;
+  font-weight: 600;
+  cursor: pointer;
+
+  &.primary {
+    background-color: #e4e451;
+
+    &:hover {
+      background-color: #d4d441;
+    }
+
+    &:active {
+      background-color: #c4c431;
+    }
+  }
+
+  &.secondary {
+    background-color: transparent;
+    color: #798af6;
+
+    &:hover {
+      color: #5d71ea;
+    }
+
+    &:active {
+      color: #4d61da;
+    }
+  }
+
+  &.danger {
+    background-color: transparent;
+    color: #df1e1e;
+
+    &:hover {
+      color: #cf0e0e;
+    }
+
+    &:active {
+      color: #bf0000;
+    }
+  }
+}
