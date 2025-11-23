@@ -1,27 +1,20 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  computed,
   input,
   output,
-  Signal,
-  signal,
 } from '@angular/core';
-import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { CustomerFilterStepForm } from '../../../../core/models/customer-filter.form';
-import { CustomerEvent, CustomerEventProperty } from '../../../../core/models/customer-events';
-import { FilterSelectComponent } from '../../../../shared/filter-select/filter-select.component';
-import { ButtonComponent } from '../../../../shared/button/button.component';
-import {IconComponent} from '../../../../shared/icon/icon.component';
+import { CustomerEvent } from '../../../../core/models/customer-events';
+import { IconComponent } from '../../../../shared/icon/icon.component';
+import { CustomerFilterStepFormComponent } from './components/customer-filter-step-form/customer-filter-step-form.component';
 
 @Component({
   selector: 'app-customer-filter-step',
   imports: [
-    ReactiveFormsModule,
-    FilterSelectComponent,
-    FilterSelectComponent,
-    ButtonComponent,
     IconComponent,
+    CustomerFilterStepFormComponent,
   ],
   templateUrl: './customer-filter-step.component.html',
   styleUrl: './customer-filter-step.component.scss',
@@ -36,36 +29,4 @@ export class CustomerFilterStepComponent {
 
   readonly stepKey = 'Step';
   readonly emptyStepLabel = 'Unnamed step';
-  readonly addEventAttributeKey = '+ Add event attribute';
-
-  selectedEvent = signal('');
-
-  eventControl = computed(() => {
-    return this.stepForm().controls.event;
-  });
-
-  attributeControl = computed(() => {
-    return this.stepForm().controls.attribute;
-  });
-
-  addEventAttribute = () => {
-    this.stepForm().controls.attribute.setValue('');
-  };
-
-  eventSelectChange = (event: string) => {
-    console.log('Event called and setting', event);
-    this.selectedEvent.set(event);
-  };
-
-  //TODO Look how to better refactor this
-  attributesList: Signal<CustomerEventProperty[]> = computed(() => {
-    const type = this.selectedEvent();
-    if (!type) return [];
-    return this.customerEvents()
-      .filter((ev) => ev.type === type)
-      .flatMap((ev) => {
-        const props = (ev as any).properties;
-        return Array.isArray(props) ? props : [props];
-      });
-  });
 }

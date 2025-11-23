@@ -1,0 +1,32 @@
+<div class="step-form" [formGroup]="stepForm()">
+  <app-filter-select [control]="eventControl()" (selectedValue)="eventSelectChange($event)">
+    @for (event of customerEvents(); track event.type) {
+      <option [value]="event.type" [selected]="eventControl().value === event.type">
+        {{ event.type }}
+      </option>
+    }
+  </app-filter-select>
+
+  @let attributeControlValue = attributeControl().value;
+
+  @if (selectedEvent() && attributeControlValue === null) {
+    <app-button type="secondary" (click)="addEventAttribute()">{{
+      addEventAttributeKey
+    }}</app-button>
+  } @else if (selectedEvent() && attributeControlValue !== null) {
+    @let attributes = attributesList();
+
+    @if (attributes.length) {
+      <app-filter-select [control]="attributeControl()">
+        @for (attribute of attributes; track attribute) {
+          <option
+            [value]="attribute.property"
+            [selected]="attributeControlValue === attribute.property"
+          >
+            {{ attribute.property }}
+          </option>
+        }
+      </app-filter-select>
+    }
+  }
+</div>
