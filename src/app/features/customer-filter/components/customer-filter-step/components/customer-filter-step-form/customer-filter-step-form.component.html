@@ -19,18 +19,34 @@
       @let attributesFormArray = attributesControl();
 
       @if (attributes.length) {
-        @for (control of attributesFormArray.controls; track i; let i = $index) {
-          <div class="attribute-wrapper">
-            <app-filter-select [control]="control" [label]="eventAttributeKey">
+        @for (
+          attributeGroup of attributesFormArray.controls;
+          track attributeGroup;
+          let i = $index
+        ) {
+          <div class="attribute-wrapper" [formGroup]="attributeGroup">
+            <app-filter-select
+              [control]="attributeGroup.controls.property"
+              [label]="eventAttributeKey"
+            >
               @for (attribute of attributes; track attribute.property) {
                 <option
                   [value]="attribute.property"
-                  [selected]="control.value === attribute.property"
+                  [selected]="attributeGroup.controls.property.value === attribute.property"
                 >
                   {{ attribute.property }}
                 </option>
               }
             </app-filter-select>
+
+            @if (attributeGroup.controls.property.value) {
+              <app-filter-operator-select
+                [control]="attributeGroup.controls.operator"
+                [propertyType]="getAttributeType(attributeGroup.controls.property.value)"
+                [label]="'Select operator'"
+              />
+            }
+
             <app-icon [type]="'remove'" (click)="removeAttribute(i)" class="delete-icon" />
           </div>
         }

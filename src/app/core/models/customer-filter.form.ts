@@ -6,5 +6,11 @@ export interface CustomerFilterForm {
 
 export interface CustomerFilterStepForm {
   event: FormControl<string>;
-  attributes: FormArray<FormControl<string | null>>;
+  attributes: FormArray<FormGroup<CustomerFilterAttributeForm>>;
+}
+
+export interface CustomerFilterAttributeForm {
+  property: FormControl<string | null>;
+  operator: FormControl<string | null>;
+  value: FormControl<string | number | null>;
 }

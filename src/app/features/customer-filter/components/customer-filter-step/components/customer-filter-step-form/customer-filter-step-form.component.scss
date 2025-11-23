@@ -17,8 +17,15 @@
 
 .attribute-wrapper {
   display: flex;
-  gap: 4px;
+  gap: 8px;
   align-items: center;
+  justify-content: flex-start;
+
+  app-filter-select,
+  app-filter-operator-select {
+    flex: 1;
+    min-width: 150px;
+  }
 
   &:hover {
     .delete-icon {
@@ -29,6 +36,6 @@
   .delete-icon {
     cursor: pointer;
     opacity: 0;
+    flex-shrink: 0;
   }
 }
-

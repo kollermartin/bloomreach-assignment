@@ -1,8 +1,9 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { FormBuilder, FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { FilterEventsService } from '../../core/services/filter-events.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { CustomerFilterContentComponent } from './components/customer-filter-content/customer-filter-content.component';
+import { CustomerFilterAttributeForm } from '../../core/models/customer-filter.form';
 
 @Component({
   selector: 'app-customer-filter',
@@ -21,7 +22,7 @@ export class CustomerFilterComponent {
     steps: this.formBuilder.array([
       this.formBuilder.group({
         event: this.formBuilder.nonNullable.control(''),
-        attributes: this.formBuilder.array<FormControl<string | null>>([]),
+        attributes: this.formBuilder.array<FormGroup<CustomerFilterAttributeForm>>([]),
       }),
     ]),
   });
@@ -42,7 +43,7 @@ export class CustomerFilterComponent {
   addStep() {
     const step = this.formBuilder.group({
       event: this.formBuilder.nonNullable.control(''),
-      attributes: this.formBuilder.array<FormControl<string | null>>([]),
+      attributes: this.formBuilder.array<FormGroup<CustomerFilterAttributeForm>>([]),
     });
 
     this.steps.push(step);
@@ -57,7 +58,7 @@ export class CustomerFilterComponent {
     this.steps.push(
       this.formBuilder.group({
         event: this.formBuilder.nonNullable.control(''),
-        attributes: this.formBuilder.array<FormControl<string | null>>([]),
+        attributes: this.formBuilder.array<FormGroup<CustomerFilterAttributeForm>>([]),
       }),
     );
   }

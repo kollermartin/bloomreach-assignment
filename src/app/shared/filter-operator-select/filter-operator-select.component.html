@@ -1,0 +1,46 @@
+<div class="filter-operator-select">
+  <button
+    type="button"
+    class="operator-trigger"
+    [class.has-value]="control().value"
+    (click)="dropdown.classList.toggle('show')"
+  >
+    {{ control().value || label() }}
+  </button>
+
+  <div #dropdown class="operator-dropdown">
+    <div class="operator-tabs">
+      <button
+        type="button"
+        class="operator-tab"
+        [class.active]="activeTab() === 'string'"
+        (click)="switchTab('string')"
+      >
+        <span class="tab-icon">T</span>
+        <span>STRING</span>
+      </button>
+      <button
+        type="button"
+        class="operator-tab"
+        [class.active]="activeTab() === 'number'"
+        (click)="switchTab('number')"
+      >
+        <span class="tab-icon">#</span>
+        <span>NUMBER</span>
+      </button>
+    </div>
+
+    <div class="operator-list">
+      @for (operation of operations(); track operation.value) {
+        <button
+          type="button"
+          class="operator-option"
+          [class.selected]="control().value === operation.value"
+          (click)="selectOperator(operation.value); dropdown.classList.remove('show')"
+        >
+          {{ operation.label }}
+        </button>
+      }
+    </div>
+  </div>
+</div>
