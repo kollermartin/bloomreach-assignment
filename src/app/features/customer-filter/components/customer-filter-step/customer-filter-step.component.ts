@@ -26,7 +26,6 @@ export class CustomerFilterStepComponent {
   customerEvents = input.required<CustomerEvent[]>();
 
   removeStep = output();
-  copyStep = output();
 
   readonly stepKey = 'Step';
   readonly emptyStepLabel = 'Unnamed step';

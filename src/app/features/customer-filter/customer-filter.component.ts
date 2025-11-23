@@ -52,15 +52,6 @@ export class CustomerFilterComponent {
     this.steps.removeAt(index);
   }
 
-  copyStep(index: number) {
-    const stepValue = this.steps.controls[index].value;
-    const copiedStep = this.formBuilder.group({
-      event: this.formBuilder.nonNullable.control(stepValue.event || ''),
-      attribute: this.formBuilder.control(stepValue.attribute ?? null),
-    });
-    this.steps.insert(index + 1, copiedStep);
-  }
-
   discardFilters() {
     this.steps.clear({ emitEvent: false });
     this.steps.push(

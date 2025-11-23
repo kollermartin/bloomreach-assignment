@@ -27,7 +27,6 @@ export class CustomerFilterContentComponent {
 
   addStep = output();
   removeStep = output<number>();
-  copyStep = output<number>();
   discardFilters = output();
 
   readonly addFunnelStepKey = '+ Add funnel step';
