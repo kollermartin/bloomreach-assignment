@@ -3,15 +3,15 @@ import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import {
   CustomerFilterAttributeForm,
   CustomerFilterStepForm,
-} from '../../../../../../core/models/customer-filter.form';
+} from '../../../../core/models/customer-filter.form';
 import {
   CustomerEvent,
   CustomerEventProperty,
-} from '../../../../../../core/models/customer-events';
-import { FilterSelectComponent } from '../../../../../../shared/filter-select/filter-select.component';
-import { ButtonComponent } from '../../../../../../shared/button/button.component';
-import { IconComponent } from '../../../../../../shared/icon/icon.component';
-import { FilterOperatorSelectComponent } from '../../../../../../shared/filter-operator-select/filter-operator-select.component';
+} from '../../../../core/models/customer-events';
+import { FilterSelectComponent } from '../../../../shared/filter-select/filter-select.component';
+import { ButtonComponent } from '../../../../shared/button/button.component';
+import { IconComponent } from '../../../../shared/icon/icon.component';
+import { FilterOperatorSelectComponent } from '../../../../shared/filter-operator-select/filter-operator-select.component';
 
 @Component({
   selector: 'app-customer-filter-step-form',

@@ -8,7 +8,7 @@ import { FormGroup } from '@angular/forms';
 import { CustomerFilterStepForm } from '../../../../core/models/customer-filter.form';
 import { CustomerEvent } from '../../../../core/models/customer-events';
 import { IconComponent } from '../../../../shared/icon/icon.component';
-import { CustomerFilterStepFormComponent } from './components/customer-filter-step-form/customer-filter-step-form.component';
+import { CustomerFilterStepFormComponent } from '../customer-filter-step-form/customer-filter-step-form.component';
 
 @Component({
   selector: 'app-customer-filter-step',
