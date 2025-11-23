@@ -16,6 +16,7 @@ export class IconComponent {
   get iconPath(): string {
     const iconMap: Record<IconType, string> = {
       delete: 'assets/icons/delete_icon.png',
+      remove: 'assets/icons/remove_icon.png',
     };
     return iconMap[this.type()];
   }

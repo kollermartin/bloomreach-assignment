@@ -1,32 +1,44 @@
 <div class="step-form" [formGroup]="stepForm()">
-  <app-filter-select [control]="eventControl()" (selectedValue)="eventSelectChange($event)">
-    @for (event of customerEvents(); track event.type) {
-      <option [value]="event.type" [selected]="eventControl().value === event.type">
-        {{ event.type }}
-      </option>
-    }
-  </app-filter-select>
+  <div class="event-column">
+    <app-filter-select
+      [control]="eventControl()"
+      (selectedValue)="eventSelectChange($event)"
+      [label]="eventLabelKey"
+    >
+      @for (event of customerEvents(); track event.type) {
+        <option [value]="event.type" [selected]="eventControl().value === event.type">
+          {{ event.type }}
+        </option>
+      }
+    </app-filter-select>
+  </div>
 
-  @let attributeControlValue = attributeControl().value;
+  <div class="attributes-column">
+    @if (selectedEvent()) {
+      @let attributes = attributesListOptions();
+      @let attributesFormArray = attributesControl();
 
-  @if (selectedEvent() && attributeControlValue === null) {
-    <app-button type="secondary" (click)="addEventAttribute()">{{
-      addEventAttributeKey
-    }}</app-button>
-  } @else if (selectedEvent() && attributeControlValue !== null) {
-    @let attributes = attributesList();
-
-    @if (attributes.length) {
-      <app-filter-select [control]="attributeControl()">
-        @for (attribute of attributes; track attribute) {
-          <option
-            [value]="attribute.property"
-            [selected]="attributeControlValue === attribute.property"
-          >
-            {{ attribute.property }}
-          </option>
+      @if (attributes.length) {
+        @for (control of attributesFormArray.controls; track i; let i = $index) {
+          <div class="attribute-wrapper">
+            <app-filter-select [control]="control" [label]="eventAttributeKey">
+              @for (attribute of attributes; track attribute.property) {
+                <option
+                  [value]="attribute.property"
+                  [selected]="control.value === attribute.property"
+                >
+                  {{ attribute.property }}
+                </option>
+              }
+            </app-filter-select>
+            <app-icon [type]="'remove'" (click)="removeAttribute(i)" class="delete-icon" />
+          </div>
         }
-      </app-filter-select>
+      }
+
+      <app-button type="secondary" (click)="addEventAttribute()">{{
+        addAttributeKey()
+      }}</app-button>
     }
-  }
+  </div>
 </div>

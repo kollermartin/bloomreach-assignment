@@ -1,2 +1,1 @@
-export type IconType = 'delete';
-
+export type IconType = 'delete' | 'remove';

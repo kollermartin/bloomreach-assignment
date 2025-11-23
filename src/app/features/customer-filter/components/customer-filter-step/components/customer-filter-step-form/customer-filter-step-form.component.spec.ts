@@ -17,7 +17,7 @@ describe('CustomerFilterStepFormComponent', () => {
     const formBuilder = new FormBuilder();
     fixture.componentRef.setInput('stepForm', formBuilder.group({
       event: formBuilder.nonNullable.control(''),
-      attribute: formBuilder.control<string | null>(null),
+      attributes: formBuilder.array([]),
     }));
     fixture.componentRef.setInput('customerEvents', []);
 

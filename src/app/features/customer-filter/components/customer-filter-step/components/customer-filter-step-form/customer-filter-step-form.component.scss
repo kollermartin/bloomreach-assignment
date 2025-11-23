@@ -1,5 +1,34 @@
 .step-form {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 16px;
+}
+
+.event-column {
   display: flex;
+  align-items: flex-start;
+}
+
+.attributes-column {
+  display: flex;
+  flex-direction: column;
   gap: 8px;
+}
+
+.attribute-wrapper {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+
+  &:hover {
+    .delete-icon {
+      opacity: 1;
+    }
+  }
+
+  .delete-icon {
+    cursor: pointer;
+    opacity: 0;
+  }
 }
 

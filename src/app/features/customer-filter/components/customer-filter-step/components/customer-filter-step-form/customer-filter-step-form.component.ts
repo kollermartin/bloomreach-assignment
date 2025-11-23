@@ -1,20 +1,17 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  input,
-  Signal,
-  signal,
-} from '@angular/core';
-import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, computed, input, Signal, signal } from '@angular/core';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CustomerFilterStepForm } from '../../../../../../core/models/customer-filter.form';
-import { CustomerEvent, CustomerEventProperty } from '../../../../../../core/models/customer-events';
+import {
+  CustomerEvent,
+  CustomerEventProperty,
+} from '../../../../../../core/models/customer-events';
 import { FilterSelectComponent } from '../../../../../../shared/filter-select/filter-select.component';
 import { ButtonComponent } from '../../../../../../shared/button/button.component';
+import { IconComponent } from '../../../../../../shared/icon/icon.component';
 
 @Component({
   selector: 'app-customer-filter-step-form',
-  imports: [ReactiveFormsModule, FilterSelectComponent, ButtonComponent],
+  imports: [ReactiveFormsModule, FilterSelectComponent, ButtonComponent, IconComponent],
   templateUrl: './customer-filter-step-form.component.html',
   styleUrl: './customer-filter-step-form.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -23,20 +20,33 @@ export class CustomerFilterStepFormComponent {
   stepForm = input.required<FormGroup<CustomerFilterStepForm>>();
   customerEvents = input.required<CustomerEvent[]>();
 
-  readonly addEventAttributeKey = '+ Add event attribute';
-
   selectedEvent = signal('');
+  attributesCount = signal(0);
+  eventLabelKey = 'Select an event';
+  eventAttributeKey = 'Select an attribute'
+
+  addAttributeKey = computed(() => {
+    const count = this.attributesCount();
+    return count > 0 ? 'Refine more' : '+ Add an event attribute';
+  });
 
   eventControl = computed(() => {
     return this.stepForm().controls.event;
   });
 
-  attributeControl = computed(() => {
-    return this.stepForm().controls.attribute;
+  attributesControl = computed(() => {
+    return this.stepForm().controls.attributes;
   });
 
   addEventAttribute = () => {
-    this.stepForm().controls.attribute.setValue('');
+    const newControl = new FormControl<string | null>(null);
+    this.attributesControl().push(newControl);
+    this.attributesCount.set(this.attributesControl().length);
+  };
+
+  removeAttribute = (index: number) => {
+    this.attributesControl().removeAt(index);
+    this.attributesCount.set(this.attributesControl().length);
   };
 
   eventSelectChange = (event: string) => {
@@ -44,7 +54,8 @@ export class CustomerFilterStepFormComponent {
     this.selectedEvent.set(event);
   };
 
-  attributesList: Signal<CustomerEventProperty[]> = computed(() => {
+  //TODO refactor this shit
+  attributesListOptions: Signal<CustomerEventProperty[]> = computed(() => {
     const type = this.selectedEvent();
     if (!type) return [];
     return this.customerEvents()
@@ -55,4 +66,3 @@ export class CustomerFilterStepFormComponent {
       });
   });
 }
-
