@@ -8,6 +8,7 @@
       <app-customer-filter-step
         [stepForm]="step"
         [index]="i"
+        [customerEvents]="customerEvents()"
         (removeStep)="removeStep.emit(i)"
         (copyStep)="copyStep.emit(i)"
       />

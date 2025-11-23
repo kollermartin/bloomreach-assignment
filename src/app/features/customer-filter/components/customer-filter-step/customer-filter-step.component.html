@@ -12,5 +12,5 @@
   </div>
 </div>
 <div [formGroup]="stepForm()">
-  <input type="text" formControlName="event" />
+  <app-filter-select formControlName="event" [options]="customerEvents()" />
 </div>
