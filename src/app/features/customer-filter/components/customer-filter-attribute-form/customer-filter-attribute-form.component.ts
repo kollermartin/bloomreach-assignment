@@ -17,8 +17,8 @@ import {
   CustomerEventProperty,
   CustomerEventPropertyType,
 } from '../../../../core/models/customer-events';
-import { filter, map, Observable, of } from 'rxjs';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { filter, map, Observable, of, withLatestFrom } from 'rxjs';
+import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { AsyncPipe } from '@angular/common';
 
 @Component({
@@ -61,6 +61,7 @@ export class CustomerFilterAttributeFormComponent implements OnInit {
 
   attributeProperty$: Observable<string | null> = of(null);
   attributeType$: Observable<CustomerEventPropertyType> = of('string');
+  attributeListMap$ = toObservable(this.attributeListMap);
 
   ngOnInit() {
     this.attributeProperty$ = this.attributeForm().controls.property.valueChanges.pipe(
@@ -69,12 +70,11 @@ export class CustomerFilterAttributeFormComponent implements OnInit {
 
     this.attributeType$ = this.attributeProperty$.pipe(
       filter((value) => !!value),
-      map((attributeProperty) => {
-        const attributeListMap = this.attributeListMap();
-        if (!attributeProperty || !attributeListMap) {
+      withLatestFrom(this.attributeListMap$),
+      map(([attributeProperty, attributeListMap]) => {
+        if (!attributeProperty) {
           return 'string';
         }
-
         return attributeListMap[attributeProperty]?.type ?? 'string';
       }),
       takeUntilDestroyed(this.destroyRef),

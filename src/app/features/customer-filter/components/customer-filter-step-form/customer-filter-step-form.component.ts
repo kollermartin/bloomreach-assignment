@@ -15,7 +15,8 @@ import {
 import { CustomerEvent, CustomerEventProperty } from '../../../../core/models/customer-events';
 import { FilterSelectComponent } from '../../../../shared/filter-select/filter-select.component';
 import { ButtonComponent } from '../../../../shared/button/button.component';
-import { filter, map, Observable, of, startWith } from 'rxjs';
+import { filter, map, Observable, of, startWith, withLatestFrom } from 'rxjs';
+import { toObservable } from '@angular/core/rxjs-interop';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { AsyncPipe } from '@angular/common';
 import { CustomerFilterAttributeFormComponent } from '../customer-filter-attribute-form/customer-filter-attribute-form.component';
@@ -48,6 +49,8 @@ export class CustomerFilterStepFormComponent implements OnInit {
   readonly addMoreAttributesKey = 'Refine more';
 
   addAttributeKey$: Observable<string> = of(this.emptyAttributesKey);
+
+  customerEvents$ = toObservable(this.customerEvents);
 
   eventControl = computed(() => {
     return this.stepForm().controls.event;
@@ -91,12 +94,12 @@ export class CustomerFilterStepFormComponent implements OnInit {
       });
 
     this.attributeListOptions$ = this.selectedCustomerEventValue$.pipe(
-      map((type) => {
+      withLatestFrom(this.customerEvents$),
+      map(([type, customerEvents]) => {
         if (!type) {
           return [];
         }
-
-        const event = this.customerEvents().find((ev) => ev.type === type);
+        const event = customerEvents.find((ev) => ev.type === type);
         return event?.properties || [];
       }),
       takeUntilDestroyed(this.destroyRef),
