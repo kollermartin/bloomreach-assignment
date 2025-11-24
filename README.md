@@ -1,8 +1,51 @@
-# BloomreachAssignment
+# Bloomreach Assignment
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.11.
+## 🚀 Overview
 
-## Development server
+This project was developed as part of the Bloomreach assignment with a focus on stability, performance, and architectural decisions within the limited time available.
+
+## 📌 Project Status
+
+This project is **not fully finished**, but the **major and most important features are completed**.  
+Some polishing, responsiveness improvements, broader test coverage, and especially the *“make it look prettier with CSS”* part are still on the to-do list.
+
+Not everything is perfectly aligned — CSS classes, spacing, naming, code style… the usual suspects.  
+But hey, I **did my best**, and everything at least *pretends* to work together 😄
+
+And just to be clear: I’m totally comfortable acknowledging that some areas could use more time and polish — that’s part of the process.
+
+
+
+## 💭 Thoughts
+
+If I were to approach this assignment again, it would be very interesting to leverage **Angular 21**, especially its new **Signal Forms** API.  
+Angular 21 introduces improvements that could simplify form handling, reduce boilerplate, and further enhance performance — something worth exploring in a future iteration of this project.
+
+## ⚙️ Tech Choices & Rationale
+
+### 🔸 Angular 20
+
+I selected **Angular 20** intentionally, even though Angular 21 was released only about a week ago. Newly released major versions often require ecosystem adjustments or may introduce unexpected breaking changes. Angular 20 provided a stable and predictable foundation for development.
+
+### 🔸 Zoneless Architecture & OnPush Change Detection
+
+The entire application is built **Zoneless** and uses Angular's `ChangeDetectionStrategy.OnPush`.  
+This ensures:
+
+- More predictable UI updates
+- Reduced change detection overhead
+- Improved performance
+
+## 🧪 Unit Testing
+
+Due to limited time, I was not able to implement full unit test coverage. I added several tests, but since I am primarily experienced with **Jest**, setting up **Jasmine/Karma** took additional time.  
+As a result, the test coverage is partial.
+
+## 📱 Responsiveness
+
+I did not have enough time to fully address UI responsiveness. The application works but is not yet optimized for different screen sizes.
+
+## 🛠️ Development Server
 
 To start a local development server, run:
 
@@ -10,50 +53,57 @@ To start a local development server, run:
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Navigate to:
 
-## Code scaffolding
+```
+http://localhost:4200/
+```
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+The application will automatically reload when source files are modified.
+
+## 🧱 Code Scaffolding
+
+To generate a new component, run:
 
 ```bash
 ng generate component component-name
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+For additional schematics, run:
 
 ```bash
 ng generate --help
 ```
 
-## Building
+## 📦 Building the Project
 
-To build the project run:
+To build the project, run:
 
 ```bash
 ng build
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+The build artifacts will be stored in the `dist/` directory. Production builds include optimizations.
 
-## Running unit tests
+## 🧪 Running Unit Tests
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+To execute unit tests using Karma, run:
 
 ```bash
 ng test
 ```
 
-## Running end-to-end tests
+## 🔍 Running End-to-End Tests
 
-For end-to-end (e2e) testing, run:
+To run end-to-end (e2e) tests, use:
 
 ```bash
 ng e2e
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+Note: Angular CLI does not include a default e2e testing framework. You may add one such as Cypress or Playwright.
 
-## Additional Resources
+## 📚 Additional Resources
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+For more information about the Angular CLI, visit:  
+https://angular.dev/tools/cli

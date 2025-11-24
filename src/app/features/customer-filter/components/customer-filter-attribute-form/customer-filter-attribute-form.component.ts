@@ -1,0 +1,90 @@
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  DestroyRef,
+  inject,
+  input,
+  OnInit,
+  output,
+} from '@angular/core';
+import { OperationSelect } from '../../../../shared/operation-select/operation-select.component';
+import { SelectComponent } from '../../../../shared/select/select.component';
+import { IconComponent } from '../../../../shared/icon/icon.component';
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { CustomerFilterAttributeForm } from '../../../../core/models/customer-filter.form';
+import {
+  CustomerEventProperty,
+  CustomerEventPropertyType,
+} from '../../../../core/models/customer-events.model';
+import { filter, map, Observable, of, startWith, withLatestFrom } from 'rxjs';
+import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
+import { AsyncPipe } from '@angular/common';
+import { getOperatorType } from '../../../../core/utils/filter-operator.utils';
+import { buildAttributeListMap } from '../../../../core/utils/customer-attribute.utils';
+import { InputComponent } from '../../../../shared/input/input.component';
+import { filterOperations } from '../../../../core/enums/filter-operations.enum';
+
+@Component({
+  selector: 'app-customer-filter-attribute-form',
+  imports: [
+    OperationSelect,
+    SelectComponent,
+    IconComponent,
+    ReactiveFormsModule,
+    AsyncPipe,
+    InputComponent,
+  ],
+  templateUrl: './customer-filter-attribute-form.component.html',
+  styleUrl: './customer-filter-attribute-form.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class CustomerFilterAttributeFormComponent implements OnInit {
+  destroyRef = inject(DestroyRef);
+
+  attributeForm = input.required<FormGroup<CustomerFilterAttributeForm>>();
+  attributeListOptions = input<CustomerEventProperty[]>();
+
+  removeAttribute = output();
+
+  readonly eventAttributeKey = 'Select an attribute';
+  readonly selectValueKey = 'Select a value';
+  readonly filterOperations = filterOperations;
+
+  attributeListMap = computed(() => buildAttributeListMap(this.attributeListOptions()));
+  attributeProperty$: Observable<string | null> = of(null);
+  attributeTypeByProperty$: Observable<CustomerEventPropertyType> = of('string');
+  attributeTypeBySelectedOperator$: Observable<CustomerEventPropertyType> = of('string');
+  attributeSelectedOperator$: Observable<string | null> = of(null);
+  attributeListMap$ = toObservable(this.attributeListMap);
+
+  ngOnInit() {
+    this.attributeProperty$ = this.attributeForm().controls.property.valueChanges.pipe(
+      startWith(this.attributeForm().controls.property.value),
+      takeUntilDestroyed(this.destroyRef),
+    );
+
+    this.attributeSelectedOperator$ = this.attributeForm().controls.operator.valueChanges.pipe(
+      startWith(this.attributeForm().controls.operator.value),
+      takeUntilDestroyed(this.destroyRef),
+    );
+
+    this.attributeTypeByProperty$ = this.attributeProperty$.pipe(
+      filter((value) => !!value),
+      withLatestFrom(this.attributeListMap$),
+      map(([attributeProperty, attributeListMap]) => {
+        if (!attributeProperty) {
+          return 'string';
+        }
+        return attributeListMap[attributeProperty]?.type ?? 'string';
+      }),
+      takeUntilDestroyed(this.destroyRef),
+    );
+
+    this.attributeTypeBySelectedOperator$ = this.attributeSelectedOperator$.pipe(
+      filter((value) => !!value),
+      map((operator) => getOperatorType(operator)),
+      takeUntilDestroyed(this.destroyRef),
+    );
+  }
+}

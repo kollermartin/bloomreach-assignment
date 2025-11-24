@@ -1,0 +1,9 @@
+@defer (when filterEvents()?.events) {
+  <div class="customer-filter">
+    <app-customer-filter-content [customerEvents]="filterEvents()!.events" />
+  </div>
+} @placeholder {
+  Loading...
+} @error {
+  <h1>Error loading customer events</h1>
+}

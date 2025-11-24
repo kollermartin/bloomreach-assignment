@@ -1,0 +1,24 @@
+.input-wrapper {
+  height: 36px;
+  min-width: 200px;
+}
+
+.input-field {
+  padding: var(--select-padding);
+  font-size: var(--select-font-size);
+  font-weight: var(--select-font-weight);
+  line-height: var(--select-line-height);
+  background-color: var(--select-background);
+  border: var(--select-border-width) solid var(--select-border-color);
+  border-radius: var(--select-border-radius);
+  color: #333;
+  outline: none;
+  transition: var(--select-transition);
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+
+  &:hover {
+    border-color: var(--select-border-color-hover);
+  }
+}

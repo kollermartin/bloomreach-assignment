@@ -1,0 +1,10 @@
+.icon {
+  display: inline-block;
+  vertical-align: middle;
+  cursor: pointer;
+  opacity: 0.5;
+
+  &:hover {
+    opacity: 1;
+  }
+}

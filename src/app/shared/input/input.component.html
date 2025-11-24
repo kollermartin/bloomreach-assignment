@@ -1,0 +1,9 @@
+<div class="input-wrapper">
+  <input
+    [type]="type() === 'number' ? 'number' : 'text'"
+    [value]="value"
+    [disabled]="disabled"
+    (input)="onInputChange($event)"
+    class="input-field"
+  />
+</div>

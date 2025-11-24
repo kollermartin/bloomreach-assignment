@@ -1,0 +1,31 @@
+:host {
+  display: grid;
+  gap: 16px;
+}
+
+.steps {
+  background-color: #fff;
+  padding: 16px 8px;
+  border-radius: 4px;
+  box-shadow:
+    rgba(0, 0, 0, 0.1) 0 1px 3px 0,
+    rgba(0, 0, 0, 0.06) 0 1px 2px 0;
+}
+
+.steps-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.steps__actions {
+  display: flex;
+  justify-content: center;
+}
+
+form {
+  display: grid;
+  gap: 16px;
+}

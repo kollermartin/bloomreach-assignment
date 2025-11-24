@@ -1,0 +1,30 @@
+select {
+  padding: var(--select-padding);
+  font-size: var(--select-font-size);
+  font-weight: var(--select-font-weight);
+  line-height: var(--select-line-height);
+  background-color: var(--select-background);
+  border: var(--select-border-width) solid var(--select-border-color);
+  border-radius: var(--select-border-radius);
+  cursor: pointer;
+  outline: none;
+  appearance: none;
+  transition: var(--select-transition);
+  min-width: var(--select-min-width);
+
+  background-image: url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4 6L8 10L12 6' stroke='%23333' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 16px 16px;
+  padding-right: 36px;
+
+  &:hover {
+    border-color: var(--select-border-color-hover);
+  }
+
+  option {
+    background-color: #ffffff;
+    color: #111827;
+    padding: 8px;
+  }
+}

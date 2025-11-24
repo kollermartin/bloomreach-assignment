@@ -1,0 +1,44 @@
+@let attributeProperty = attributeProperty$ | async;
+@let attributePropertyTypeByDefault = attributeTypeByProperty$ | async;
+@let selectedOperator = attributeSelectedOperator$ | async;
+@let attributePropertyTypeBySelectedOperator = attributeTypeBySelectedOperator$ | async;
+
+<div class="attribute-wrapper" [formGroup]="attributeForm()">
+  <app-select formControlName="property" [label]="eventAttributeKey">
+    @for (attribute of attributeListOptions(); track attribute.property) {
+      <option [value]="attribute.property">
+        {{ attribute.property }}
+      </option>
+    }
+  </app-select>
+
+  @if (attributeProperty) {
+    <app-operation-select
+      formControlName="operator"
+      [defaultPropertyType]="attributePropertyTypeByDefault ?? 'string'"
+      [label]="'Select operator'"
+    />
+
+    @if (selectedOperator && attributePropertyTypeBySelectedOperator) {
+      @switch (selectedOperator) {
+        @case (filterOperations.contains) {
+          <app-select [label]="selectValueKey" />
+        }
+        @case (filterOperations.does_not_contain) {
+          <app-select [label]="selectValueKey" />
+        }
+        @case (filterOperations.in_between) {
+          <div class="in-between-wrapper">
+            <app-input formControlName="valueFrom" type="number" />
+            and
+            <app-input formControlName="valueTo" type="number" />
+          </div>
+        }
+        @default {
+          <app-input formControlName="value" [type]="attributePropertyTypeBySelectedOperator" />
+        }
+      }
+    }
+  }
+  <app-icon [type]="'remove'" (click)="removeAttribute.emit()" class="delete-icon" />
+</div>

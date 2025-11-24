@@ -1,0 +1,25 @@
+.step-form {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 16px;
+
+  &__event-column {
+    display: flex;
+    align-items: flex-start;
+  }
+
+  &__attributes-column {
+    display: flex;
+    flex-direction: column;
+
+    > div {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+  }
+}
+
+app-button {
+  align-self: flex-start;
+}
