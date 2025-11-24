@@ -1,1 +1,35 @@
 /* You can add global styles to this file, and also import other style files */
+
+/* Global resets and base styles */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+html {
+  font-family: 'Roboto', sans-serif;
+}
+
+/* CSS Variables */
+:root {
+  /* Select component variables */
+  --select-padding: 8px 32px 8px 12px;
+  --select-font-size: 0.75rem;
+  --select-font-weight: 600;
+  --select-line-height: 1.5;
+  --select-border-radius: 4px;
+  --select-border-width: 1px;
+  --select-border-color: #e5e7eb;
+  --select-border-color-hover: #d1d5db;
+  --select-background: #ffffff;
+  --select-transition: all 0.15s ease-in-out;
+  --select-min-width: 150px;
+}
