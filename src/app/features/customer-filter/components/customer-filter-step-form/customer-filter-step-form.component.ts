@@ -15,11 +15,10 @@ import {
 import { CustomerEvent, CustomerEventProperty } from '../../../../core/models/customer-events';
 import { FilterSelectComponent } from '../../../../shared/filter-select/filter-select.component';
 import { ButtonComponent } from '../../../../shared/button/button.component';
-import { IconComponent } from '../../../../shared/icon/icon.component';
-import { FilterOperatorSelectComponent } from '../../../../shared/filter-operator-select/filter-operator-select.component';
-import { map, Observable, of, startWith } from 'rxjs';
+import { filter, map, Observable, of, startWith } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { AsyncPipe } from '@angular/common';
+import { CustomerFilterAttributeFormComponent } from '../customer-filter-attribute-form/customer-filter-attribute-form.component';
 
 @Component({
   selector: 'app-customer-filter-step-form',
@@ -27,9 +26,8 @@ import { AsyncPipe } from '@angular/common';
     ReactiveFormsModule,
     FilterSelectComponent,
     ButtonComponent,
-    IconComponent,
-    FilterOperatorSelectComponent,
     AsyncPipe,
+    CustomerFilterAttributeFormComponent,
   ],
   templateUrl: './customer-filter-step-form.component.html',
   styleUrl: './customer-filter-step-form.component.scss',
@@ -43,7 +41,6 @@ export class CustomerFilterStepFormComponent implements OnInit {
   customerEvents = input.required<CustomerEvent[]>();
 
   eventLabelKey = 'Select an event';
-  eventAttributeKey = 'Select an attribute';
   selectedCustomerEventValue$: Observable<string> = of('');
   attributeListOptions$: Observable<CustomerEventProperty[]> = of([]);
 
@@ -82,6 +79,17 @@ export class CustomerFilterStepFormComponent implements OnInit {
       startWith(this.eventControl().value),
       takeUntilDestroyed(this.destroyRef),
     );
+
+    // Reset attributes when customer event changes
+    this.stepForm()
+      .controls.event.valueChanges.pipe(
+        filter((value) => !!value),
+        takeUntilDestroyed(this.destroyRef),
+      )
+      .subscribe(() => {
+        this.stepForm().controls.attributes.clear();
+      });
+
     this.attributeListOptions$ = this.selectedCustomerEventValue$.pipe(
       map((type) => {
         if (!type) {

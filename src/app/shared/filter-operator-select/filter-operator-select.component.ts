@@ -55,10 +55,9 @@ export class FilterOperatorSelectComponent implements ControlValueAccessor {
       return null;
     }
 
-    // Search in both string and number operations
     const allOperations = [...this.stringOperations, ...this.numberOperations];
     const operation = allOperations.find((op) => op.value === currentValue);
-    return operation?.label || currentValue;
+    return operation?.label || '';
   });
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function

@@ -1,0 +1,21 @@
+@let attributeProperty = attributeProperty$ | async;
+@let attributePropertyType = attributeType$ | async;
+
+<div class="attribute-wrapper" [formGroup]="attributeForm()">
+  <app-filter-select formControlName="property" [label]="eventAttributeKey">
+    @for (attribute of attributeListOptions(); track attribute.property) {
+      <option [value]="attribute.property">
+        {{ attribute.property }}
+      </option>
+    }
+  </app-filter-select>
+
+  @if (attributeProperty) {
+    <app-filter-operator-select
+      formControlName="operator"
+      [propertyType]="attributePropertyType ?? 'string'"
+      [label]="'Select operator'"
+    />
+  }
+  <app-icon [type]="'remove'" (click)="removeAttribute.emit()" class="delete-icon" />
+</div>
