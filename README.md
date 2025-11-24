@@ -2,7 +2,7 @@
 
 ## 🚀 Overview
 
-This project was developed as part of the Bloomreach assignment with a focus on stability, performance, and architectural decisions within the limited time available.
+This project was developed as part of the Bloomreach assignment.
 
 ## 📌 Project Status
 
