@@ -22,6 +22,7 @@ import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { AsyncPipe } from '@angular/common';
 import { getOperatorType } from '../../../../core/utils/filter-operator.utils';
 import { buildAttributeListMap } from '../../../../core/utils/customer-attribute.utils';
+import {InputComponent} from '../../../../shared/input/input.component';
 
 @Component({
   selector: 'app-customer-filter-attribute-form',
@@ -31,6 +32,7 @@ import { buildAttributeListMap } from '../../../../core/utils/customer-attribute
     IconComponent,
     ReactiveFormsModule,
     AsyncPipe,
+    InputComponent,
   ],
   templateUrl: './customer-filter-attribute-form.component.html',
   styleUrl: './customer-filter-attribute-form.component.scss',

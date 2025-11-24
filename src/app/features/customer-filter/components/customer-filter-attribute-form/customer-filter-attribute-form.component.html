@@ -19,12 +19,8 @@
       [label]="'Select operator'"
     />
 
-    @if (selectedOperator) {
-      @if (attributePropertyTypeBySelectedOperator === 'string') {
-        <input />
-      } @else if (attributePropertyTypeBySelectedOperator === 'number') {
-        <input type="number" />
-      }
+    @if (selectedOperator && attributePropertyTypeBySelectedOperator) {
+      <app-input formControlName="value" [type]="attributePropertyTypeBySelectedOperator" />
     }
   }
   <app-icon [type]="'remove'" (click)="removeAttribute.emit()" class="delete-icon" />
