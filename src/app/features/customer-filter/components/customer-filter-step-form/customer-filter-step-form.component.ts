@@ -16,8 +16,7 @@ import { CustomerEvent, CustomerEventProperty } from '../../../../core/models/cu
 import { FilterSelectComponent } from '../../../../shared/filter-select/filter-select.component';
 import { ButtonComponent } from '../../../../shared/button/button.component';
 import { filter, map, Observable, of, startWith, withLatestFrom } from 'rxjs';
-import { toObservable } from '@angular/core/rxjs-interop';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { AsyncPipe } from '@angular/common';
 import { CustomerFilterAttributeFormComponent } from '../customer-filter-attribute-form/customer-filter-attribute-form.component';
 

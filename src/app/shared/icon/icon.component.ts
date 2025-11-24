@@ -17,6 +17,7 @@ export class IconComponent {
     const iconMap: Record<IconType, string> = {
       delete: 'assets/icons/delete_icon.png',
       remove: 'assets/icons/remove_icon.png',
+      copy: 'assets/icons/copy_icon.png'
     };
     return iconMap[this.type()];
   }

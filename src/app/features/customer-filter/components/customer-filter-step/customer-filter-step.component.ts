@@ -30,6 +30,7 @@ export class CustomerFilterStepComponent implements OnInit {
   index = input.required<number>();
   customerEvents = input.required<CustomerEvent[]>();
   removeStep = output();
+  copyStep = output();
 
   readonly stepKey = 'Step';
   readonly emptyStepLabel = 'Unnamed step';

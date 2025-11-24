@@ -63,6 +63,29 @@ export class CustomerFilterContentComponent {
     this.steps.removeAt(index);
   }
 
+  copyStep(index: number) {
+    const originalStep = this.steps.at(index);
+    if (!originalStep) {
+      return;
+    }
+
+    const stepValue = originalStep.value;
+    const copiedStep = this.formBuilder.group({
+      event: this.formBuilder.nonNullable.control(stepValue.event ?? ''),
+      attributes: this.formBuilder.array(
+        (stepValue.attributes || []).map((attr) =>
+          this.formBuilder.group({
+            property: this.formBuilder.control(attr.property ?? null),
+            operator: this.formBuilder.control(attr.operator ?? null),
+            value: this.formBuilder.control(attr.value ?? null),
+          }),
+        ),
+      ),
+    });
+
+    this.steps.insert(index + 1, copiedStep);
+  }
+
   discardFilters() {
     this.steps.clear({ emitEvent: false });
     this.steps.push(
