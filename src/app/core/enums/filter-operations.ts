@@ -23,7 +23,7 @@ export const numberFilterOperations = [
     value: 'equal_to',
   },
   {
-    label: 'in_between',
+    label: 'in between',
     value: 'in_between',
   },
   {

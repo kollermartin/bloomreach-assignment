@@ -12,7 +12,12 @@
 .attributes-column {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+
+  > div {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
 }
 
 .attribute-wrapper {

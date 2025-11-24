@@ -12,39 +12,39 @@
   </div>
 
   <div class="attributes-column">
-    @let attributes = attributeListOptions$ | async;
+    @let attributesOptions = attributeListOptions$ | async;
     @let addAttributeKey = addAttributeKey$ | async;
 
     @if (selectedEvent) {
-      @let attributesFormArray = attributesControl();
+      <div formArrayName="attributes">
+        @if (attributesOptions && attributesOptions.length) {
+          @for (
+            attributeGroup of attributesFormArray.controls;
+            track attributeGroup;
+            let i = $index
+          ) {
+            <div class="attribute-wrapper" [formGroupName]="i">
+              <app-filter-select formControlName="property" [label]="eventAttributeKey">
+                @for (attribute of attributesOptions; track attribute.property) {
+                  <option [value]="attribute.property">
+                    {{ attribute.property }}
+                  </option>
+                }
+              </app-filter-select>
 
-      @if (attributes && attributes.length) {
-        @for (
-          attributeGroup of attributesFormArray.controls;
-          track attributeGroup;
-          let i = $index
-        ) {
-          <div class="attribute-wrapper" [formGroup]="attributeGroup">
-            <app-filter-select formControlName="property" [label]="eventAttributeKey">
-              @for (attribute of attributes; track attribute.property) {
-                <option [value]="attribute.property">
-                  {{ attribute.property }}
-                </option>
+              <!--            TODO other sub I guess, when selecting attribute, set propertyType as well -->
+              @if (attributeGroup.controls.property.value) {
+                <app-filter-operator-select
+                  formControlName="operator"
+                  [propertyType]="'string'"
+                  [label]="'Select operator'"
+                />
               }
-            </app-filter-select>
-
-            <!--            TODO other sub I guess, when selecting attribute, set propertyType as well -->
-            @if (attributeGroup.controls.property.value) {
-              <app-filter-operator-select
-                formControlName="operator"
-                [propertyType]="'string'"
-                [label]="'Select operator'"
-              />
-            }
-            <app-icon [type]="'remove'" (click)="removeAttribute(i)" class="delete-icon" />
-          </div>
+              <app-icon [type]="'remove'" (click)="removeAttribute(i)" class="delete-icon" />
+            </div>
+          }
         }
-      }
+      </div>
 
       <app-button type="secondary" [withoutSidePadding]="true" (click)="addEventAttribute()">{{
         addAttributeKey

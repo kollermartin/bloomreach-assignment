@@ -56,9 +56,9 @@ export class CustomerFilterStepFormComponent implements OnInit {
     return this.stepForm().controls.event;
   });
 
-  attributesControl = computed(() => {
+  get attributesFormArray() {
     return this.stepForm().controls.attributes;
-  });
+  }
 
   ngOnInit() {
     this.initFormSubscriptions();
@@ -70,11 +70,11 @@ export class CustomerFilterStepFormComponent implements OnInit {
       operator: this.formBuilder.control<string | null>(null),
       value: this.formBuilder.control<string | number | null>(null),
     });
-    this.attributesControl().push(newAttributeGroup);
+    this.attributesFormArray.push(newAttributeGroup);
   }
 
   removeAttribute(index: number) {
-    this.attributesControl().removeAt(index);
+    this.attributesFormArray.removeAt(index);
   }
 
   private initFormSubscriptions() {
