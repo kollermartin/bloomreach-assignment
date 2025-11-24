@@ -48,6 +48,7 @@ export class CustomerFilterStepFormComponent implements OnInit {
   attributeListOptions$: Observable<CustomerEventProperty[]> = of([]);
 
   readonly emptyAttributesKey = 'Add an event attribute';
+  readonly addMoreAttributesKey = 'Refine more';
 
   addAttributeKey$: Observable<string> = of(this.emptyAttributesKey);
 
@@ -96,7 +97,7 @@ export class CustomerFilterStepFormComponent implements OnInit {
     this.addAttributeKey$ = this.stepForm().controls.attributes.valueChanges.pipe(
       startWith(this.stepForm().controls.attributes.value),
       map((attributes) => {
-        return attributes.length ? 'Refine more' : this.emptyAttributesKey;
+        return attributes.length ? this.addMoreAttributesKey : this.emptyAttributesKey;
       }),
       takeUntilDestroyed(this.destroyRef),
     );

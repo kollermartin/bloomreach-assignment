@@ -4,7 +4,7 @@
   <div class="event-column">
     <app-filter-select [formControl]="eventControl()" [label]="eventLabelKey">
       @for (event of customerEvents(); track event.type) {
-        <option [value]="event.type" [selected]="selectedEvent === event.type">
+        <option [value]="event.type">
           {{ event.type }}
         </option>
       }
@@ -30,15 +30,13 @@
               [label]="eventAttributeKey"
             >
               @for (attribute of attributes; track attribute.property) {
-                <option
-                  [value]="attribute.property"
-                  [selected]="attributeGroup.controls.property.value === attribute.property"
-                >
+                <option [value]="attribute.property">
                   {{ attribute.property }}
                 </option>
               }
             </app-filter-select>
 
+            <!--            TODO other sub I guess -->
             @if (attributeGroup.controls.property.value) {
               <app-filter-operator-select
                 [control]="attributeGroup.controls.operator"
