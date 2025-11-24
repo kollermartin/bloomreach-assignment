@@ -28,10 +28,10 @@ export const numberFilterOperations = [
   },
   {
     label: 'less than',
-    value: 'less than',
+    value: 'less_than',
   },
   {
     label: 'greater than',
-    value: 'greater than',
+    value: 'greater_than',
   },
 ];

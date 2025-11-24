@@ -36,7 +36,7 @@
             <!--            TODO other sub I guess, when selecting attribute, set propertyType as well -->
             @if (attributeGroup.controls.property.value) {
               <app-filter-operator-select
-                [control]="attributeGroup.controls.operator"
+                formControlName="operator"
                 [propertyType]="'string'"
                 [label]="'Select operator'"
               />

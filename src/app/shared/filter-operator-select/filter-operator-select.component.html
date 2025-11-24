@@ -2,13 +2,13 @@
   <button
     type="button"
     class="operator-trigger"
-    [class.has-value]="control().value"
+    [class.has-value]="value()"
     (click)="toggleDropdown()"
   >
-    {{ control().value || label() }}
+    {{ displayLabel() || label() }}
   </button>
 
-  <div #dropdown class="operator-dropdown" [class.show]="isOpen()">
+  <div class="operator-dropdown" [class.show]="isOpen()">
     <div class="operator-tabs">
       <button
         type="button"

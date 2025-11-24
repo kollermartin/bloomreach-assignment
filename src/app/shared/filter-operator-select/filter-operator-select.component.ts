@@ -1,5 +1,13 @@
-import { ChangeDetectionStrategy, Component, computed, effect, input, signal } from '@angular/core';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  effect,
+  forwardRef,
+  input,
+  signal,
+} from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
 import { CustomerEventPropertyType } from '../../core/models/customer-events';
 import { numberFilterOperations, stringFilterOperations } from '../../core/enums/filter-operations';
 import { CommonModule } from '@angular/common';
@@ -10,13 +18,20 @@ import { CommonModule } from '@angular/common';
   templateUrl: './filter-operator-select.component.html',
   styleUrl: './filter-operator-select.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => FilterOperatorSelectComponent),
+      multi: true,
+    },
+  ],
 })
-export class FilterOperatorSelectComponent {
-  control = input.required<FormControl<string | null>>();
+export class FilterOperatorSelectComponent implements ControlValueAccessor {
   propertyType = input.required<CustomerEventPropertyType>();
   label = input<string>('Select operator');
 
   isOpen = signal(false);
+  value = signal<string | null>(null);
 
   private _activeTab = signal<CustomerEventPropertyType | null>(null);
 
@@ -34,16 +49,51 @@ export class FilterOperatorSelectComponent {
     return ops.length > 0 ? ops[0].value : null;
   });
 
+  displayLabel = computed(() => {
+    const currentValue = this.value();
+    if (!currentValue) {
+      return null;
+    }
+
+    // Search in both string and number operations
+    const allOperations = [...this.stringOperations, ...this.numberOperations];
+    const operation = allOperations.find((op) => op.value === currentValue);
+    return operation?.label || currentValue;
+  });
+
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  private onChange: (value: string | null) => void = () => {};
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  private onTouched: () => void = () => {};
+  private disabled = false;
+
   constructor() {
     // Set default operation when propertyType changes and control has no value
     effect(() => {
       const defaultOp = this.defaultSelectedOperation();
-      const currentValue = this.control().value;
+      const currentValue = this.value();
 
       if (!currentValue && defaultOp) {
-        this.control().setValue(defaultOp);
+        this.writeValue(defaultOp);
+        this.onChange(defaultOp);
       }
     });
+  }
+
+  writeValue(value: string | null): void {
+    this.value.set(value);
+  }
+
+  registerOnChange(fn: (value: string | null) => void): void {
+    this.onChange = fn;
+  }
+
+  registerOnTouched(fn: () => void): void {
+    this.onTouched = fn;
+  }
+
+  setDisabledState(isDisabled: boolean): void {
+    this.disabled = isDisabled;
   }
 
   onBlur(event: FocusEvent) {
@@ -51,11 +101,14 @@ export class FilterOperatorSelectComponent {
 
     if (!relatedTarget) {
       this.closeDropdown();
+      this.onTouched();
     }
   }
 
   toggleDropdown() {
-    this.isOpen.update((value) => !value);
+    if (!this.disabled) {
+      this.isOpen.update((value) => !value);
+    }
   }
 
   closeDropdown() {
@@ -67,7 +120,8 @@ export class FilterOperatorSelectComponent {
   }
 
   selectOperator(value: string) {
-    this.control().setValue(value);
+    this.value.set(value);
+    this.onChange(value);
     this.closeDropdown();
   }
 }
