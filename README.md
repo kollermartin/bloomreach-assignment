@@ -7,7 +7,14 @@ This project was developed as part of the Bloomreach assignment with a focus on 
 ## 📌 Project Status
 
 This project is **not fully finished**, but the **major and most important features are completed**.  
-Some polishing, responsiveness improvements, and broader test coverage are still pending.
+Some polishing, responsiveness improvements, broader test coverage, and especially the *“make it look prettier with CSS”* part are still on the to-do list.
+
+Not everything is perfectly aligned — CSS classes, spacing, naming, code style… the usual suspects.  
+But hey, I **did my best**, and everything at least *pretends* to work together 😄
+
+And just to be clear: I’m totally comfortable acknowledging that some areas could use more time and polish — that’s part of the process.
+
+
 
 ## 💭 Thoughts
 
@@ -25,8 +32,8 @@ I selected **Angular 20** intentionally, even though Angular 21 was released onl
 The entire application is built **Zoneless** and uses Angular's `ChangeDetectionStrategy.OnPush`.  
 This ensures:
 
-- More predictable UI updates  
-- Reduced change detection overhead  
+- More predictable UI updates
+- Reduced change detection overhead
 - Improved performance
 
 ## 🧪 Unit Testing
