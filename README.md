@@ -14,12 +14,16 @@ But hey, I **did my best**, and everything at least *pretends* to work together 
 
 And just to be clear: I’m totally comfortable acknowledging that some areas could use more time and polish — that’s part of the process.
 
-
-
 ## 💭 Thoughts
 
-If I were to approach this assignment again, it would be very interesting to leverage **Angular 21**, especially its new **Signal Forms** API.  
-Angular 21 introduces improvements that could simplify form handling, reduce boilerplate, and further enhance performance — something worth exploring in a future iteration of this project.
+If I were to approach this assignment again, it would be very interesting to leverage **Angular 21**, especially its new **Signal Forms**.  
+The improvements introduced there could simplify form handling, reduce boilerplate, and potentially boost performance — definitely something I’d like to explore in a future iteration.
+
+Since Angular 20 does not include Signal Forms yet, this project ended up being a **compromise between Signals and RxJS**:  
+- **Signals** are used for inputs and passing data around,  
+- **RxJS** is used for reacting to Angular Reactive Forms and their value changes.  
+
+It works well, but Signal Forms in Angular 21 would make this architecture much cleaner.
 
 ## ⚙️ Tech Choices & Rationale
 
