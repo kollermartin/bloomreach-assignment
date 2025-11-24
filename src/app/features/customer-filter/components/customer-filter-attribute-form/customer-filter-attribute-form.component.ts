@@ -22,7 +22,8 @@ import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { AsyncPipe } from '@angular/common';
 import { getOperatorType } from '../../../../core/utils/filter-operator.utils';
 import { buildAttributeListMap } from '../../../../core/utils/customer-attribute.utils';
-import {InputComponent} from '../../../../shared/input/input.component';
+import { InputComponent } from '../../../../shared/input/input.component';
+import { filterOperations } from '../../../../core/enums/filter-operations';
 
 @Component({
   selector: 'app-customer-filter-attribute-form',
@@ -49,6 +50,8 @@ export class CustomerFilterAttributeFormComponent implements OnInit {
   removeAttribute = output();
 
   readonly eventAttributeKey = 'Select an attribute';
+  readonly selectValueKey = 'Select a value';
+  readonly filterOperations = filterOperations;
 
   attributeProperty$: Observable<string | null> = of(null);
   attributeTypeByProperty$: Observable<CustomerEventPropertyType> = of('string');

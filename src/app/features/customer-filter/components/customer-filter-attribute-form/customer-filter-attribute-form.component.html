@@ -20,7 +20,11 @@
     />
 
     @if (selectedOperator && attributePropertyTypeBySelectedOperator) {
-      <app-input formControlName="value" [type]="attributePropertyTypeBySelectedOperator" />
+      @if (selectedOperator && selectedOperator === filterOperations.contains) {
+        <app-filter-select [label]="selectValueKey" />
+      } @else {
+        <app-input formControlName="value" [type]="attributePropertyTypeBySelectedOperator" />
+      }
     }
   }
   <app-icon [type]="'remove'" (click)="removeAttribute.emit()" class="delete-icon" />
