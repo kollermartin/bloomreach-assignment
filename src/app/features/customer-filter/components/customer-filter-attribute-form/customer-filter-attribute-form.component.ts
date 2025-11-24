@@ -17,9 +17,11 @@ import {
   CustomerEventProperty,
   CustomerEventPropertyType,
 } from '../../../../core/models/customer-events';
-import { filter, map, Observable, of, withLatestFrom } from 'rxjs';
+import { filter, map, Observable, of, startWith, tap, withLatestFrom } from 'rxjs';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { AsyncPipe } from '@angular/common';
+import { getOperatorType } from '../../../../core/utils/filter-operator.utils';
+import { buildAttributeListMap } from '../../../../core/utils/customer-attribute.utils';
 
 @Component({
   selector: 'app-customer-filter-attribute-form',
@@ -40,35 +42,30 @@ export class CustomerFilterAttributeFormComponent implements OnInit {
   attributeForm = input.required<FormGroup<CustomerFilterAttributeForm>>();
   attributeListOptions = input<CustomerEventProperty[]>();
 
-  attributeListMap = computed(() => {
-    const attributeListOptions = this.attributeListOptions();
-    if (!attributeListOptions) {
-      return {};
-    }
-
-    return attributeListOptions.reduce(
-      (acc, curr) => {
-        acc[curr.property] = curr;
-        return acc;
-      },
-      {} as Record<string, CustomerEventProperty>,
-    );
-  });
+  attributeListMap = computed(() => buildAttributeListMap(this.attributeListOptions()));
 
   removeAttribute = output();
 
   readonly eventAttributeKey = 'Select an attribute';
 
   attributeProperty$: Observable<string | null> = of(null);
-  attributeType$: Observable<CustomerEventPropertyType> = of('string');
+  attributeTypeByProperty$: Observable<CustomerEventPropertyType> = of('string');
+  attributeTypeBySelectedOperator$: Observable<CustomerEventPropertyType> = of('string');
+  attributeSelectedOperator$: Observable<string | null> = of(null);
   attributeListMap$ = toObservable(this.attributeListMap);
 
   ngOnInit() {
     this.attributeProperty$ = this.attributeForm().controls.property.valueChanges.pipe(
+      startWith(this.attributeForm().controls.property.value),
       takeUntilDestroyed(this.destroyRef),
     );
 
-    this.attributeType$ = this.attributeProperty$.pipe(
+    this.attributeSelectedOperator$ = this.attributeForm().controls.operator.valueChanges.pipe(
+      startWith(this.attributeForm().controls.operator.value),
+      takeUntilDestroyed(this.destroyRef),
+    );
+
+    this.attributeTypeByProperty$ = this.attributeProperty$.pipe(
       filter((value) => !!value),
       withLatestFrom(this.attributeListMap$),
       map(([attributeProperty, attributeListMap]) => {
@@ -77,6 +74,12 @@ export class CustomerFilterAttributeFormComponent implements OnInit {
         }
         return attributeListMap[attributeProperty]?.type ?? 'string';
       }),
+      takeUntilDestroyed(this.destroyRef),
+    );
+
+    this.attributeTypeBySelectedOperator$ = this.attributeSelectedOperator$.pipe(
+      filter((value) => !!value),
+      map((operator) => getOperatorType(operator)),
       takeUntilDestroyed(this.destroyRef),
     );
   }

@@ -1,5 +1,7 @@
 @let attributeProperty = attributeProperty$ | async;
-@let attributePropertyType = attributeType$ | async;
+@let attributePropertyTypeByDefault = attributeTypeByProperty$ | async;
+@let selectedOperator = attributeSelectedOperator$ | async;
+@let attributePropertyTypeBySelectedOperator = attributeTypeBySelectedOperator$ | async;
 
 <div class="attribute-wrapper" [formGroup]="attributeForm()">
   <app-filter-select formControlName="property" [label]="eventAttributeKey">
@@ -13,9 +15,17 @@
   @if (attributeProperty) {
     <app-filter-operator-select
       formControlName="operator"
-      [propertyType]="attributePropertyType ?? 'string'"
+      [defaultPropertyType]="attributePropertyTypeByDefault ?? 'string'"
       [label]="'Select operator'"
     />
+
+    @if (selectedOperator) {
+      @if (attributePropertyTypeBySelectedOperator === 'string') {
+        <input />
+      } @else if (attributePropertyTypeBySelectedOperator === 'number') {
+        <input type="number" />
+      }
+    }
   }
   <app-icon [type]="'remove'" (click)="removeAttribute.emit()" class="delete-icon" />
 </div>

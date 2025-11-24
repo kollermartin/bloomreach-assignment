@@ -9,7 +9,12 @@ import {
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
 import { CustomerEventPropertyType } from '../../core/models/customer-events';
-import { numberFilterOperations, stringFilterOperations } from '../../core/enums/filter-operations';
+import {
+  filterOperationsList,
+  FilterOperationType,
+  numberFilterOperations,
+  stringFilterOperations
+} from '../../core/enums/filter-operations';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -27,7 +32,7 @@ import { CommonModule } from '@angular/common';
   ],
 })
 export class FilterOperatorSelectComponent implements ControlValueAccessor {
-  propertyType = input.required<CustomerEventPropertyType>();
+  defaultPropertyType = input.required<CustomerEventPropertyType>();
   label = input<string>('Select operator');
 
   isOpen = signal(false);
@@ -35,7 +40,7 @@ export class FilterOperatorSelectComponent implements ControlValueAccessor {
 
   private _activeTab = signal<CustomerEventPropertyType | null>(null);
 
-  activeTab = computed(() => this._activeTab() || this.propertyType());
+  activeTab = computed(() => this._activeTab() || this.defaultPropertyType());
 
   stringOperations = stringFilterOperations;
   numberOperations = numberFilterOperations;
@@ -55,7 +60,7 @@ export class FilterOperatorSelectComponent implements ControlValueAccessor {
       return null;
     }
 
-    const allOperations = [...this.stringOperations, ...this.numberOperations];
+    const allOperations = filterOperationsList;
     const operation = allOperations.find((op) => op.value === currentValue);
     return operation?.label || '';
   });
