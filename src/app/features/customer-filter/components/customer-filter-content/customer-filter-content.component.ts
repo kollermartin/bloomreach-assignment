@@ -32,6 +32,11 @@ export class CustomerFilterContentComponent {
   readonly addFunnelStepKey = '+ Add funnel step';
   readonly heading = 'customer filter';
   readonly applyFilterKey = 'Apply filters';
+  readonly discardFilterKey = 'Discard filters';
+
+  get steps() {
+    return this.customerFilterForm.controls.steps;
+  }
 
   customerFilterForm = this.formBuilder.group({
     steps: this.formBuilder.array([
@@ -41,10 +46,6 @@ export class CustomerFilterContentComponent {
       }),
     ]),
   });
-
-  get steps() {
-    return this.customerFilterForm.controls.steps;
-  }
 
   addStep() {
     const step = this.emptyStep();
@@ -71,6 +72,8 @@ export class CustomerFilterContentComponent {
             property: this.formBuilder.control(attr.property ?? null),
             operator: this.formBuilder.control(attr.operator ?? null),
             value: this.formBuilder.control(attr.value ?? null),
+            valueFrom: this.formBuilder.control(attr.valueFrom ?? null),
+            valueTo: this.formBuilder.control(attr.valueTo ?? null),
           }),
         ),
       ),

@@ -45,14 +45,13 @@ export class CustomerFilterAttributeFormComponent implements OnInit {
   attributeForm = input.required<FormGroup<CustomerFilterAttributeForm>>();
   attributeListOptions = input<CustomerEventProperty[]>();
 
-  attributeListMap = computed(() => buildAttributeListMap(this.attributeListOptions()));
-
   removeAttribute = output();
 
   readonly eventAttributeKey = 'Select an attribute';
   readonly selectValueKey = 'Select a value';
   readonly filterOperations = filterOperations;
 
+  attributeListMap = computed(() => buildAttributeListMap(this.attributeListOptions()));
   attributeProperty$: Observable<string | null> = of(null);
   attributeTypeByProperty$: Observable<CustomerEventPropertyType> = of('string');
   attributeTypeBySelectedOperator$: Observable<CustomerEventPropertyType> = of('string');

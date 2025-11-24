@@ -1,8 +1,8 @@
 <div class="steps-header">
   <span>{{ heading | uppercase }}</span>
-  <app-button type="danger" [withoutSidePadding]="true" (click)="discardFilters()"
-    >Discard filters</app-button
-  >
+  <app-button type="danger" [withoutSidePadding]="true" (click)="discardFilters()">{{
+    discardFilterKey
+  }}</app-button>
 </div>
 <form [formGroup]="customerFilterForm" (ngSubmit)="onApplyFilters()">
   <div class="steps" formArrayName="steps">

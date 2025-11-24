@@ -13,6 +13,8 @@ export interface CustomerFilterAttributeForm {
   property: FormControl<string | null>;
   operator: FormControl<string | null>;
   value: FormControl<string | number | null>;
+  valueFrom: FormControl<number | null>;
+  valueTo: FormControl<number | null>;
 }
 
 export interface CustomerFilterFormValue {

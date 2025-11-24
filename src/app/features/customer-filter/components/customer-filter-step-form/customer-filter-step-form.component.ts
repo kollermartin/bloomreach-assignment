@@ -12,7 +12,10 @@ import {
   CustomerFilterAttributeForm,
   CustomerFilterStepForm,
 } from '../../../../core/models/customer-filter.form';
-import { CustomerEvent, CustomerEventProperty } from '../../../../core/models/customer-events.model';
+import {
+  CustomerEvent,
+  CustomerEventProperty,
+} from '../../../../core/models/customer-events.model';
 import { SelectComponent } from '../../../../shared/select/select.component';
 import { ButtonComponent } from '../../../../shared/button/button.component';
 import { filter, map, Observable, of, startWith, withLatestFrom } from 'rxjs';
@@ -40,15 +43,14 @@ export class CustomerFilterStepFormComponent implements OnInit {
   stepForm = input.required<FormGroup<CustomerFilterStepForm>>();
   customerEvents = input.required<CustomerEvent[]>();
 
+  readonly emptyAttributesKey = 'Add an event attribute';
+  readonly addMoreAttributesKey = 'Refine more';
+
   eventLabelKey = 'Select an event';
   selectedCustomerEventValue$: Observable<string> = of('');
   attributeListOptions$: Observable<CustomerEventProperty[]> = of([]);
 
-  readonly emptyAttributesKey = 'Add an event attribute';
-  readonly addMoreAttributesKey = 'Refine more';
-
   addAttributeKey$: Observable<string> = of(this.emptyAttributesKey);
-
   customerEvents$ = toObservable(this.customerEvents);
 
   eventControl = computed(() => {
@@ -68,6 +70,8 @@ export class CustomerFilterStepFormComponent implements OnInit {
       property: this.formBuilder.control<string | null>(null),
       operator: this.formBuilder.control<string | null>(null),
       value: this.formBuilder.control<string | number | null>(null),
+      valueFrom: this.formBuilder.control<number | null>(null),
+      valueTo: this.formBuilder.control<number | null>(null),
     });
     this.attributesFormArray.push(newAttributeGroup);
   }

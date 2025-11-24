@@ -20,10 +20,23 @@
     />
 
     @if (selectedOperator && attributePropertyTypeBySelectedOperator) {
-      @if (selectedOperator && selectedOperator === filterOperations.contains) {
-        <app-select [label]="selectValueKey" />
-      } @else {
-        <app-input formControlName="value" [type]="attributePropertyTypeBySelectedOperator" />
+      @switch (selectedOperator) {
+        @case (filterOperations.contains) {
+          <app-select [label]="selectValueKey" />
+        }
+        @case (filterOperations.does_not_contain) {
+          <app-select [label]="selectValueKey" />
+        }
+        @case (filterOperations.in_between) {
+          <div class="in-between-wrapper">
+            <app-input formControlName="valueFrom" type="number" />
+            and
+            <app-input formControlName="valueTo" type="number" />
+          </div>
+        }
+        @default {
+          <app-input formControlName="value" [type]="attributePropertyTypeBySelectedOperator" />
+        }
       }
     }
   }
