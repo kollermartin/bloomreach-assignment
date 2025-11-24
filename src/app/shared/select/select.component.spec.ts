@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SelectComponent } from './select.component';
+import { provideZonelessChangeDetection } from '@angular/core';
 
 describe('FilterSelectComponent', () => {
   let component: SelectComponent;
@@ -8,9 +9,9 @@ describe('FilterSelectComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SelectComponent]
-    })
-    .compileComponents();
+      imports: [SelectComponent],
+      providers: [provideZonelessChangeDetection()],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(SelectComponent);
     component = fixture.componentInstance;

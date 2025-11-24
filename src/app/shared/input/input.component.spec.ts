@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { InputComponent } from './input.component';
+import { provideZonelessChangeDetection } from '@angular/core';
 
 describe('InputComponent', () => {
   let component: InputComponent;
@@ -8,6 +9,7 @@ describe('InputComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [InputComponent],
+      providers: [provideZonelessChangeDetection()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(InputComponent);
@@ -19,4 +21,3 @@ describe('InputComponent', () => {
     expect(component).toBeTruthy();
   });
 });
-

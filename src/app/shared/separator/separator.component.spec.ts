@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SeparatorComponent } from './separator.component';
+import { provideZonelessChangeDetection } from '@angular/core';
 
 describe('SeparatorComponent', () => {
   let component: SeparatorComponent;
@@ -8,9 +9,9 @@ describe('SeparatorComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SeparatorComponent]
-    })
-    .compileComponents();
+      imports: [SeparatorComponent],
+      providers: [provideZonelessChangeDetection()],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(SeparatorComponent);
     component = fixture.componentInstance;
