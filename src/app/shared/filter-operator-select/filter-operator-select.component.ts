@@ -11,9 +11,8 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@a
 import { CustomerEventPropertyType } from '../../core/models/customer-events';
 import {
   filterOperationsList,
-  FilterOperationType,
   numberFilterOperations,
-  stringFilterOperations
+  stringFilterOperations,
 } from '../../core/enums/filter-operations';
 import { CommonModule } from '@angular/common';
 

@@ -17,7 +17,7 @@ import {
   CustomerEventProperty,
   CustomerEventPropertyType,
 } from '../../../../core/models/customer-events';
-import { filter, map, Observable, of, startWith, tap, withLatestFrom } from 'rxjs';
+import { filter, map, Observable, of, startWith, withLatestFrom } from 'rxjs';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { AsyncPipe } from '@angular/common';
 import { getOperatorType } from '../../../../core/utils/filter-operator.utils';
