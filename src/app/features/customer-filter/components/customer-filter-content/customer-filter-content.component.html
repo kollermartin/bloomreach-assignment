@@ -1,6 +1,6 @@
 <div class="steps-header">
   <span>{{ heading | uppercase }}</span>
-  <app-button type="danger" (click)="discardFilters()">Discard filters</app-button>
+  <app-button type="danger" [withoutSidePadding]="true" (click)="discardFilters()">Discard filters</app-button>
 </div>
 <form [formGroup]="customerFilterForm">
   <div class="steps" formArrayName="steps">

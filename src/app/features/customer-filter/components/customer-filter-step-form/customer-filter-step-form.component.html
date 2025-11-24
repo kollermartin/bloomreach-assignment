@@ -1,12 +1,10 @@
+@let selectedEvent = selectedCustomerEventValue$ | async;
+
 <div class="step-form" [formGroup]="stepForm()">
   <div class="event-column">
-    <app-filter-select
-      [control]="eventControl()"
-      (selectedValue)="eventSelectChange($event)"
-      [label]="eventLabelKey"
-    >
+    <app-filter-select [control]="eventControl()" [label]="eventLabelKey">
       @for (event of customerEvents(); track event.type) {
-        <option [value]="event.type" [selected]="eventControl().value === event.type">
+        <option [value]="event.type" [selected]="selectedEvent === event.type">
           {{ event.type }}
         </option>
       }
@@ -14,11 +12,13 @@
   </div>
 
   <div class="attributes-column">
-    @if (selectedEvent()) {
-      @let attributes = attributesListOptions();
+    @let attributes = attributeListOptions$ | async;
+    @let addAttributeKey = addAttributeKey$ | async;
+
+    @if (selectedEvent) {
       @let attributesFormArray = attributesControl();
 
-      @if (attributes.length) {
+      @if (attributes && attributes.length) {
         @for (
           attributeGroup of attributesFormArray.controls;
           track attributeGroup;
@@ -42,18 +42,17 @@
             @if (attributeGroup.controls.property.value) {
               <app-filter-operator-select
                 [control]="attributeGroup.controls.operator"
-                [propertyType]="getAttributeType(attributeGroup.controls.property.value)"
+                [propertyType]="'string'"
                 [label]="'Select operator'"
               />
             }
-
             <app-icon [type]="'remove'" (click)="removeAttribute(i)" class="delete-icon" />
           </div>
         }
       }
 
-      <app-button type="secondary" (click)="addEventAttribute()">{{
-        addAttributeKey()
+      <app-button type="secondary" [withoutSidePadding]="true" (click)="addEventAttribute()">{{
+        addAttributeKey
       }}</app-button>
     }
   </div>

@@ -43,4 +43,9 @@
       color: #bf0000;
     }
   }
+
+  &--without-side-padding {
+    padding-left: 0;
+    padding-right: 0;
+  }
 }

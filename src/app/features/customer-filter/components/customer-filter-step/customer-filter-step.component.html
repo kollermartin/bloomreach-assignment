@@ -1,16 +1,13 @@
 @let stepIndex = index();
 @let stepIndexToDisplay = stepIndex + 1;
-@let stepName = stepForm().controls.event.value || emptyStepLabel;
+@let eventValue = eventValue$ | async;
 
 <div class="step-label">
-  <span>{{ stepIndexToDisplay }}. {{ stepKey }}: {{ stepName }}</span>
+  <span>{{ stepIndexToDisplay }}. {{ stepKey }}: {{ eventValue }}</span>
   <div class="step-label__actions">
     @if (stepIndex) {
       <app-icon [type]="'delete'" (click)="removeStep.emit()" />
     }
   </div>
 </div>
-<app-customer-filter-step-form
-  [stepForm]="stepForm()"
-  [customerEvents]="customerEvents()"
-/>
+<app-customer-filter-step-form [stepForm]="stepForm()" [customerEvents]="customerEvents()" />

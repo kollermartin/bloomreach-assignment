@@ -1,17 +1,25 @@
-import { ChangeDetectionStrategy, Component, computed, input, Signal, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  DestroyRef,
+  inject,
+  input,
+  OnInit,
+} from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import {
   CustomerFilterAttributeForm,
   CustomerFilterStepForm,
 } from '../../../../core/models/customer-filter.form';
-import {
-  CustomerEvent,
-  CustomerEventProperty,
-} from '../../../../core/models/customer-events';
+import { CustomerEvent, CustomerEventProperty } from '../../../../core/models/customer-events';
 import { FilterSelectComponent } from '../../../../shared/filter-select/filter-select.component';
 import { ButtonComponent } from '../../../../shared/button/button.component';
 import { IconComponent } from '../../../../shared/icon/icon.component';
 import { FilterOperatorSelectComponent } from '../../../../shared/filter-operator-select/filter-operator-select.component';
+import { map, Observable, of, startWith } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-customer-filter-step-form',
@@ -21,26 +29,27 @@ import { FilterOperatorSelectComponent } from '../../../../shared/filter-operato
     ButtonComponent,
     IconComponent,
     FilterOperatorSelectComponent,
+    AsyncPipe,
   ],
   templateUrl: './customer-filter-step-form.component.html',
   styleUrl: './customer-filter-step-form.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CustomerFilterStepFormComponent {
-  private formBuilder = new FormBuilder();
+export class CustomerFilterStepFormComponent implements OnInit {
+  private formBuilder = inject(FormBuilder);
+  private destroyRef = inject(DestroyRef);
 
   stepForm = input.required<FormGroup<CustomerFilterStepForm>>();
   customerEvents = input.required<CustomerEvent[]>();
 
-  selectedEvent = signal('');
-  attributesCount = signal(0);
   eventLabelKey = 'Select an event';
   eventAttributeKey = 'Select an attribute';
+  selectedCustomerEventValue$: Observable<string> = of('');
+  attributeListOptions$: Observable<CustomerEventProperty[]> = of([]);
 
-  addAttributeKey = computed(() => {
-    const count = this.attributesCount();
-    return count > 0 ? 'Refine more' : '+ Add an event attribute';
-  });
+  readonly emptyAttributesKey = 'Add an event attribute';
+
+  addAttributeKey$: Observable<string> = of(this.emptyAttributesKey);
 
   eventControl = computed(() => {
     return this.stepForm().controls.event;
@@ -50,37 +59,46 @@ export class CustomerFilterStepFormComponent {
     return this.stepForm().controls.attributes;
   });
 
-  addEventAttribute = () => {
+  ngOnInit() {
+    this.initFormSubscriptions();
+  }
+
+  addEventAttribute() {
     const newAttributeGroup = this.formBuilder.group<CustomerFilterAttributeForm>({
       property: this.formBuilder.control<string | null>(null),
       operator: this.formBuilder.control<string | null>(null),
       value: this.formBuilder.control<string | number | null>(null),
     });
     this.attributesControl().push(newAttributeGroup);
-    this.attributesCount.set(this.attributesControl().length);
-  };
+  }
 
-  removeAttribute = (index: number) => {
+  removeAttribute(index: number) {
     this.attributesControl().removeAt(index);
-    this.attributesCount.set(this.attributesControl().length);
-  };
+  }
 
-  eventSelectChange = (event: string) => {
-    console.log('Event called and setting', event);
-    this.selectedEvent.set(event);
-  };
+  private initFormSubscriptions() {
+    this.selectedCustomerEventValue$ = this.stepForm().controls.event.valueChanges.pipe(
+      startWith(this.eventControl().value),
+      takeUntilDestroyed(this.destroyRef),
+    );
+    this.attributeListOptions$ = this.selectedCustomerEventValue$.pipe(
+      map((type) => {
+        if (!type) {
+          return [];
+        }
 
-  //TODO refactor this shit
-  attributesListOptions: Signal<CustomerEventProperty[]> = computed(() => {
-    const type = this.selectedEvent();
-    if (!type) return [];
-    const event = this.customerEvents().find((ev) => ev.type === type);
-    return event?.properties || [];
-  });
+        const event = this.customerEvents().find((ev) => ev.type === type);
+        return event?.properties || [];
+      }),
+      takeUntilDestroyed(this.destroyRef),
+    );
 
-  getAttributeType(propertyName: string | null): 'string' | 'number' {
-    if (!propertyName) return 'string';
-    const attribute = this.attributesListOptions().find((attr) => attr.property === propertyName);
-    return attribute?.type || 'string';
+    this.addAttributeKey$ = this.stepForm().controls.attributes.valueChanges.pipe(
+      startWith(this.stepForm().controls.attributes.value),
+      map((attributes) => {
+        return attributes.length ? 'Refine more' : this.emptyAttributesKey;
+      }),
+      takeUntilDestroyed(this.destroyRef),
+    );
   }
 }
