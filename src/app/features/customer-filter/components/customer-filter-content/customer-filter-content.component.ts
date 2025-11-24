@@ -51,10 +51,7 @@ export class CustomerFilterContentComponent {
   }
 
   addStep() {
-    const step = this.formBuilder.group({
-      event: this.formBuilder.nonNullable.control(''),
-      attributes: this.formBuilder.array<FormGroup<CustomerFilterAttributeForm>>([]),
-    });
+    const step = this.emptyStep();
 
     this.steps.push(step);
   }
@@ -87,12 +84,14 @@ export class CustomerFilterContentComponent {
   }
 
   discardFilters() {
-    this.steps.clear({ emitEvent: false });
-    this.steps.push(
-      this.formBuilder.group({
-        event: this.formBuilder.nonNullable.control(''),
-        attributes: this.formBuilder.array<FormGroup<CustomerFilterAttributeForm>>([]),
-      }),
-    );
+    this.steps.clear();
+    this.steps.push(this.emptyStep());
+  }
+
+  private emptyStep() {
+    return this.formBuilder.group({
+      event: this.formBuilder.nonNullable.control(''),
+      attributes: this.formBuilder.array<FormGroup<CustomerFilterAttributeForm>>([]),
+    });
   }
 }
