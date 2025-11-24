@@ -16,6 +16,8 @@ export class FilterOperatorSelectComponent {
   propertyType = input.required<CustomerEventPropertyType>();
   label = input<string>('Select operator');
 
+  isOpen = signal(false);
+
   private _activeTab = signal<CustomerEventPropertyType | null>(null);
 
   activeTab = computed(() => this._activeTab() || this.propertyType());
@@ -44,11 +46,28 @@ export class FilterOperatorSelectComponent {
     });
   }
 
+  onBlur(event: FocusEvent) {
+    const relatedTarget = event.relatedTarget as HTMLElement;
+
+    if (!relatedTarget) {
+      this.closeDropdown();
+    }
+  }
+
+  toggleDropdown() {
+    this.isOpen.update((value) => !value);
+  }
+
+  closeDropdown() {
+    this.isOpen.set(false);
+  }
+
   switchTab(type: CustomerEventPropertyType) {
     this._activeTab.set(type);
   }
 
   selectOperator(value: string) {
     this.control().setValue(value);
+    this.closeDropdown();
   }
 }

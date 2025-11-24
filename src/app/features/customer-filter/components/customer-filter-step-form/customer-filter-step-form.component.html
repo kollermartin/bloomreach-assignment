@@ -25,10 +25,7 @@
           let i = $index
         ) {
           <div class="attribute-wrapper" [formGroup]="attributeGroup">
-            <app-filter-select
-              formControlName="property"
-              [label]="eventAttributeKey"
-            >
+            <app-filter-select formControlName="property" [label]="eventAttributeKey">
               @for (attribute of attributes; track attribute.property) {
                 <option [value]="attribute.property">
                   {{ attribute.property }}
@@ -36,7 +33,7 @@
               }
             </app-filter-select>
 
-            <!--            TODO other sub I guess -->
+            <!--            TODO other sub I guess, when selecting attribute, set propertyType as well -->
             @if (attributeGroup.controls.property.value) {
               <app-filter-operator-select
                 [control]="attributeGroup.controls.operator"
