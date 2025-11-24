@@ -2,7 +2,7 @@
 
 <div class="step-form" [formGroup]="stepForm()">
   <div class="event-column">
-    <app-filter-select [formControl]="eventControl()" [label]="eventLabelKey">
+    <app-filter-select formControlName="event" [label]="eventLabelKey">
       @for (event of customerEvents(); track event.type) {
         <option [value]="event.type">
           {{ event.type }}
@@ -26,7 +26,7 @@
         ) {
           <div class="attribute-wrapper" [formGroup]="attributeGroup">
             <app-filter-select
-              [formControl]="attributeGroup.controls.property"
+              formControlName="property"
               [label]="eventAttributeKey"
             >
               @for (attribute of attributes; track attribute.property) {
