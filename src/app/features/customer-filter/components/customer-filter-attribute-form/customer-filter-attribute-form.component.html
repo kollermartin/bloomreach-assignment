@@ -4,16 +4,16 @@
 @let attributePropertyTypeBySelectedOperator = attributeTypeBySelectedOperator$ | async;
 
 <div class="attribute-wrapper" [formGroup]="attributeForm()">
-  <app-filter-select formControlName="property" [label]="eventAttributeKey">
+  <app-select formControlName="property" [label]="eventAttributeKey">
     @for (attribute of attributeListOptions(); track attribute.property) {
       <option [value]="attribute.property">
         {{ attribute.property }}
       </option>
     }
-  </app-filter-select>
+  </app-select>
 
   @if (attributeProperty) {
-    <app-filter-operator-select
+    <app-operation-select
       formControlName="operator"
       [defaultPropertyType]="attributePropertyTypeByDefault ?? 'string'"
       [label]="'Select operator'"
@@ -21,7 +21,7 @@
 
     @if (selectedOperator && attributePropertyTypeBySelectedOperator) {
       @if (selectedOperator && selectedOperator === filterOperations.contains) {
-        <app-filter-select [label]="selectValueKey" />
+        <app-select [label]="selectValueKey" />
       } @else {
         <app-input formControlName="value" [type]="attributePropertyTypeBySelectedOperator" />
       }

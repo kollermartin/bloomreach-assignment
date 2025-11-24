@@ -1,4 +1,4 @@
-import { CustomerEventProperty } from '../models/customer-events';
+import { CustomerEventProperty } from '../models/customer-events.model';
 
 export function buildAttributeListMap(attributeListOptions?: CustomerEventProperty[]): Record<string, CustomerEventProperty> {
   if (!attributeListOptions) {

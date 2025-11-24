@@ -12,8 +12,8 @@ import {
   CustomerFilterAttributeForm,
   CustomerFilterStepForm,
 } from '../../../../core/models/customer-filter.form';
-import { CustomerEvent, CustomerEventProperty } from '../../../../core/models/customer-events';
-import { FilterSelectComponent } from '../../../../shared/filter-select/filter-select.component';
+import { CustomerEvent, CustomerEventProperty } from '../../../../core/models/customer-events.model';
+import { SelectComponent } from '../../../../shared/select/select.component';
 import { ButtonComponent } from '../../../../shared/button/button.component';
 import { filter, map, Observable, of, startWith, withLatestFrom } from 'rxjs';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
@@ -24,7 +24,7 @@ import { CustomerFilterAttributeFormComponent } from '../customer-filter-attribu
   selector: 'app-customer-filter-step-form',
   imports: [
     ReactiveFormsModule,
-    FilterSelectComponent,
+    SelectComponent,
     ButtonComponent,
     AsyncPipe,
     CustomerFilterAttributeFormComponent,

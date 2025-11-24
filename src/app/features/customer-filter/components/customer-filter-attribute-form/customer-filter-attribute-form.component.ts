@@ -8,28 +8,28 @@ import {
   OnInit,
   output,
 } from '@angular/core';
-import { FilterOperatorSelectComponent } from '../../../../shared/filter-operator-select/filter-operator-select.component';
-import { FilterSelectComponent } from '../../../../shared/filter-select/filter-select.component';
+import { OperationSelect } from '../../../../shared/operation-select/operation-select.component';
+import { SelectComponent } from '../../../../shared/select/select.component';
 import { IconComponent } from '../../../../shared/icon/icon.component';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CustomerFilterAttributeForm } from '../../../../core/models/customer-filter.form';
 import {
   CustomerEventProperty,
   CustomerEventPropertyType,
-} from '../../../../core/models/customer-events';
+} from '../../../../core/models/customer-events.model';
 import { filter, map, Observable, of, startWith, withLatestFrom } from 'rxjs';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { AsyncPipe } from '@angular/common';
 import { getOperatorType } from '../../../../core/utils/filter-operator.utils';
 import { buildAttributeListMap } from '../../../../core/utils/customer-attribute.utils';
 import { InputComponent } from '../../../../shared/input/input.component';
-import { filterOperations } from '../../../../core/enums/filter-operations';
+import { filterOperations } from '../../../../core/enums/filter-operations.enum';
 
 @Component({
   selector: 'app-customer-filter-attribute-form',
   imports: [
-    FilterOperatorSelectComponent,
-    FilterSelectComponent,
+    OperationSelect,
+    SelectComponent,
     IconComponent,
     ReactiveFormsModule,
     AsyncPipe,

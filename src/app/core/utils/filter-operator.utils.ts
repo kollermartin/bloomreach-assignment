@@ -1,5 +1,5 @@
-import { filterOperationsList } from '../enums/filter-operations';
-import { CustomerEventPropertyType } from '../models/customer-events';
+import { filterOperationsList } from '../models/filter.operations.model';
+import { CustomerEventPropertyType } from '../models/customer-events.model';
 
 // Build the lookup map once at module level
 const operatorTypeMap: Record<string, CustomerEventPropertyType> = {};

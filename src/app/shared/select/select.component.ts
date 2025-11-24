@@ -2,20 +2,20 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
-  selector: 'app-filter-select',
+  selector: 'app-select',
   imports: [],
-  templateUrl: './filter-select.component.html',
-  styleUrl: './filter-select.component.scss',
+  templateUrl: './select.component.html',
+  styleUrl: './select.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: FilterSelectComponent,
+      useExisting: SelectComponent,
       multi: true,
     },
   ],
 })
-export class FilterSelectComponent implements ControlValueAccessor {
+export class SelectComponent implements ControlValueAccessor {
   label = input('Select an option');
   value = '';
   disabled = false;

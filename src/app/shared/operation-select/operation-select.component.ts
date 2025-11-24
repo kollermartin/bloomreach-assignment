@@ -8,29 +8,29 @@ import {
   signal,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
-import { CustomerEventPropertyType } from '../../core/models/customer-events';
+import { CustomerEventPropertyType } from '../../core/models/customer-events.model';
 import {
   filterOperationsList,
   numberFilterOperations,
   stringFilterOperations,
-} from '../../core/enums/filter-operations';
+} from '../../core/models/filter.operations.model';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-filter-operator-select',
+  selector: 'app-operation-select',
   imports: [ReactiveFormsModule, CommonModule],
-  templateUrl: './filter-operator-select.component.html',
-  styleUrl: './filter-operator-select.component.scss',
+  templateUrl: './operation-select.component.html',
+  styleUrl: './operation-select.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => FilterOperatorSelectComponent),
+      useExisting: forwardRef(() => OperationSelect),
       multi: true,
     },
   ],
 })
-export class FilterOperatorSelectComponent implements ControlValueAccessor {
+export class OperationSelect implements ControlValueAccessor {
   defaultPropertyType = input.required<CustomerEventPropertyType>();
   label = input<string>('Select operator');
 

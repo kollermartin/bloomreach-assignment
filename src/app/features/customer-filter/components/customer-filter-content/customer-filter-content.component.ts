@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject, input, output } from '@angular/core';
-import { CustomerEvent } from '../../../../core/models/customer-events';
+import { CustomerEvent } from '../../../../core/models/customer-events.model';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CustomerFilterStepComponent } from '../customer-filter-step/customer-filter-step.component';
 import { SeparatorComponent } from '../../../../shared/separator/separator.component';

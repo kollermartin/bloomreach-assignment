@@ -1,13 +1,4 @@
-export enum filterOperations {
-  equals = 'equals',
-  contains = 'contains',
-  does_not_equal = 'does_not_equal',
-  does_not_contain = 'does_not_contain',
-  equal_to = 'equal_to',
-  in_between = 'in_between',
-  less_than = 'less_than',
-  greater_than = 'greater_than',
-}
+import { filterOperations } from '../enums/filter-operations.enum';
 
 export type FilterOperationType = 'string' | 'number';
 

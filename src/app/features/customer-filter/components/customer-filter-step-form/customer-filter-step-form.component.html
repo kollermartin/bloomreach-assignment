@@ -2,13 +2,13 @@
 
 <div class="step-form" [formGroup]="stepForm()">
   <div class="event-column">
-    <app-filter-select formControlName="event" [label]="eventLabelKey">
+    <app-select formControlName="event" [label]="eventLabelKey">
       @for (event of customerEvents(); track event.type) {
         <option [value]="event.type">
           {{ event.type }}
         </option>
       }
-    </app-filter-select>
+    </app-select>
   </div>
 
   <div class="attributes-column">

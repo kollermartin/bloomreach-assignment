@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FilterOperatorSelectComponent } from './filter-operator-select.component';
+import { OperationSelect } from './operation-select.component';
 
 describe('FilterOperatorSelectComponent', () => {
-  let component: FilterOperatorSelectComponent;
-  let fixture: ComponentFixture<FilterOperatorSelectComponent>;
+  let component: OperationSelect;
+  let fixture: ComponentFixture<OperationSelect>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FilterOperatorSelectComponent],
+      imports: [OperationSelect],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(FilterOperatorSelectComponent);
+    fixture = TestBed.createComponent(OperationSelect);
     component = fixture.componentInstance;
 
     fixture.componentRef.setInput('propertyType', 'string');
