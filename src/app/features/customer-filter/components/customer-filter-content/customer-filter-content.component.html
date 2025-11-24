@@ -1,8 +1,10 @@
 <div class="steps-header">
   <span>{{ heading | uppercase }}</span>
-  <app-button type="danger" [withoutSidePadding]="true" (click)="discardFilters()">Discard filters</app-button>
+  <app-button type="danger" [withoutSidePadding]="true" (click)="discardFilters()"
+    >Discard filters</app-button
+  >
 </div>
-<form [formGroup]="customerFilterForm">
+<form [formGroup]="customerFilterForm" (ngSubmit)="onApplyFilters()">
   <div class="steps" formArrayName="steps">
     @for (step of steps.controls; track step; let i = $index) {
       <app-customer-filter-step
@@ -20,5 +22,5 @@
       }}</app-button>
     </div>
   </div>
+  <app-button [type]="'primary'" nativeType="submit">{{ applyFilterKey }}</app-button>
 </form>
-<app-button>Apply filters</app-button>

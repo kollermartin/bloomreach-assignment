@@ -1,14 +1,9 @@
-<!--TODO Adjust defer later-->
-@defer (when filterEvents()) {
-  @let events = filterEvents()?.events;
-
-  @if (events) {
-    <div class="customer-filter">
-      <app-customer-filter-content [customerEvents]="events" />
-    </div>
-  } @else {
-    <h1>No customer events available</h1>
-  }
+@defer (when filterEvents()?.events) {
+  <div class="customer-filter">
+    <app-customer-filter-content [customerEvents]="filterEvents()!.events" />
+  </div>
 } @placeholder {
   Loading...
+} @error {
+  <h1>Error loading customer events</h1>
 }

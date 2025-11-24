@@ -1,9 +1,12 @@
-import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input, output } from '@angular/core';
 import { CustomerEvent } from '../../../../core/models/customer-events';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CustomerFilterStepComponent } from '../customer-filter-step/customer-filter-step.component';
 import { SeparatorComponent } from '../../../../shared/separator/separator.component';
-import { CustomerFilterAttributeForm } from '../../../../core/models/customer-filter.form';
+import {
+  CustomerFilterAttributeForm,
+  CustomerFilterFormValue,
+} from '../../../../core/models/customer-filter.form';
 import { UpperCasePipe } from '@angular/common';
 import { ButtonComponent } from '../../../../shared/button/button.component';
 
@@ -24,9 +27,11 @@ export class CustomerFilterContentComponent {
   private formBuilder = inject(FormBuilder);
 
   customerEvents = input.required<CustomerEvent[]>();
+  applyFilters = output<FormGroup>();
 
   readonly addFunnelStepKey = '+ Add funnel step';
   readonly heading = 'customer filter';
+  readonly applyFilterKey = 'Apply filters';
 
   customerFilterForm = this.formBuilder.group({
     steps: this.formBuilder.array([
@@ -36,15 +41,6 @@ export class CustomerFilterContentComponent {
       }),
     ]),
   });
-
-  constructor() {
-    this.customerFilterForm.valueChanges.subscribe((value) => {
-      console.log('Form value changed', value);
-    });
-    this.steps.valueChanges.subscribe((value) => {
-      console.log('Steps changed:', value);
-    });
-  }
 
   get steps() {
     return this.customerFilterForm.controls.steps;
@@ -93,5 +89,10 @@ export class CustomerFilterContentComponent {
       event: this.formBuilder.nonNullable.control(''),
       attributes: this.formBuilder.array<FormGroup<CustomerFilterAttributeForm>>([]),
     });
+  }
+
+  onApplyFilters() {
+    const formValue: CustomerFilterFormValue = this.customerFilterForm.getRawValue();
+    console.log(formValue);
   }
 }

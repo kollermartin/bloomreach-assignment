@@ -12,4 +12,5 @@ import { NgClass } from '@angular/common';
 export class ButtonComponent {
   type = input<ButtonType>('primary');
   withoutSidePadding = input(false);
+  nativeType = input<'button' | 'submit' | 'reset'>('button');
 }

@@ -14,3 +14,18 @@ export interface CustomerFilterAttributeForm {
   operator: FormControl<string | null>;
   value: FormControl<string | number | null>;
 }
+
+export interface CustomerFilterFormValue {
+  steps: CustomerFilterFormStepValue[];
+}
+
+export interface CustomerFilterFormStepValue {
+  event: string;
+  attributes: CustomerFilterFormAttributeValue[];
+}
+
+export interface CustomerFilterFormAttributeValue {
+  property: string | null;
+  value: string | number | null;
+  operator: string | null;
+}
