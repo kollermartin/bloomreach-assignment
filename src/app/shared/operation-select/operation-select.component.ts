@@ -71,12 +71,11 @@ export class OperationSelect implements ControlValueAccessor {
   private disabled = false;
 
   constructor() {
-    // Set default operation when propertyType changes and control has no value
+    // Set default operation when propertyType changes
     effect(() => {
       const defaultOp = this.defaultSelectedOperation();
-      const currentValue = this.value();
 
-      if (!currentValue && defaultOp) {
+      if (defaultOp) {
         this.writeValue(defaultOp);
         this.onChange(defaultOp);
       }
