@@ -2,13 +2,7 @@
 
 <div class="step-form" [formGroup]="stepForm()">
   <div class="step-form__event-column">
-    <app-select formControlName="event" [label]="eventLabelKey">
-      @for (event of customerEvents(); track event.type) {
-        <option [value]="event.type">
-          {{ event.type }}
-        </option>
-      }
-    </app-select>
+    <app-select formControlName="event" [label]="eventLabelKey" [options]="eventSelectOptions()" />
   </div>
 
   <div class="step-form__attributes-column">

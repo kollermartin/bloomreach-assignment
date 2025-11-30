@@ -51,6 +51,17 @@ export class CustomerFilterAttributeFormComponent implements OnInit {
   readonly selectValueKey = 'Select a value';
   readonly filterOperations = filterOperations;
 
+  attributeSelectOptions = computed(() => {
+    const attributeOptions = this.attributeListOptions();
+    if (!attributeOptions) {
+      return [];
+    }
+
+    return attributeOptions.map((option) => ({
+      label: option.property,
+      value: option.property,
+    }));
+  });
   attributeListMap = computed(() => buildAttributeListMap(this.attributeListOptions()));
   attributeProperty$: Observable<string | null> = of(null);
   attributeTypeByProperty$: Observable<CustomerEventPropertyType> = of('string');

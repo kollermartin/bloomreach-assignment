@@ -1,4 +1,14 @@
-<select [value]="value" (change)="onSelectChange($event)">
-  <option value="">{{ label() }}</option>
-  <ng-content />
-</select>
+<div class="select" appClickOutside (clickOutside)="onBlur($event)">
+  <button type="button" class="select-trigger" [class.has-value]="value()" (click)="toggleOpen()">
+    <span>{{ displayLabel() }}</span>
+  </button>
+  <div class="select-dropdown" [class.select-dropdown--show]="isOpen()">
+    @for (option of options(); track option.value) {
+      <button type="button" class="select-option" (click)="onSelectChange(option.value)">
+        {{ option.label }}
+      </button>
+    } @empty {
+      <span>No options provided</span>
+    }
+  </div>
+</div>
