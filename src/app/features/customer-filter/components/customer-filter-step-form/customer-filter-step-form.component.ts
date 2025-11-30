@@ -22,6 +22,7 @@ import { filter, map, Observable, of, startWith, withLatestFrom } from 'rxjs';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { AsyncPipe } from '@angular/common';
 import { CustomerFilterAttributeFormComponent } from '../customer-filter-attribute-form/customer-filter-attribute-form.component';
+import { Option } from '../../../../shared/select/select.model';
 
 @Component({
   selector: 'app-customer-filter-step-form',
@@ -52,6 +53,13 @@ export class CustomerFilterStepFormComponent implements OnInit {
 
   addAttributeKey$: Observable<string> = of(this.emptyAttributesKey);
   customerEvents$ = toObservable(this.customerEvents);
+
+  eventSelectOptions = computed<Option[]>(() => {
+    return this.customerEvents().map((event) => ({
+      label: event.type,
+      value: event.type,
+    }));
+  });
 
   eventControl = computed(() => {
     return this.stepForm().controls.event;

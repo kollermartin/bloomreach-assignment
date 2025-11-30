@@ -4,13 +4,11 @@
 @let attributePropertyTypeBySelectedOperator = attributeTypeBySelectedOperator$ | async;
 
 <div class="attribute-wrapper" [formGroup]="attributeForm()">
-  <app-select formControlName="property" [label]="eventAttributeKey">
-    @for (attribute of attributeListOptions(); track attribute.property) {
-      <option [value]="attribute.property">
-        {{ attribute.property }}
-      </option>
-    }
-  </app-select>
+  <app-select
+    formControlName="property"
+    [label]="eventAttributeKey"
+    [options]="attributeSelectOptions()"
+  />
 
   @if (attributeProperty) {
     <app-operation-select
