@@ -3,7 +3,9 @@ import {
   Component,
   computed,
   effect,
+  ElementRef,
   forwardRef,
+  inject,
   input,
   signal,
 } from '@angular/core';
@@ -15,10 +17,11 @@ import {
   stringFilterOperations,
 } from '../../core/models/filter.operations.model';
 import { CommonModule } from '@angular/common';
+import { ClickOutsideDirective } from '../click-outside.directive';
 
 @Component({
   selector: 'app-operation-select',
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, ClickOutsideDirective],
   templateUrl: './operation-select.component.html',
   styleUrl: './operation-select.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -98,10 +101,8 @@ export class OperationSelect implements ControlValueAccessor {
     this.disabled = isDisabled;
   }
 
-  onBlur(event: FocusEvent) {
-    const relatedTarget = event.relatedTarget as HTMLElement;
-
-    if (!relatedTarget) {
+  onBlur(event: MouseEvent) {
+    if (event) {
       this.closeDropdown();
       this.onTouched();
     }
