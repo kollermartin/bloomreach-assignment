@@ -1,5 +1,6 @@
 .select {
   position: relative;
+  min-width: var(--select-min-width);
 }
 
 .select-trigger {
